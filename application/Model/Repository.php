@@ -22,6 +22,14 @@ class Model_Repository
 		return trim($description);
 	}
 
+	public function hasDefaultDescription()
+	{
+		$description = file_get_contents($this->path . '/.git/description');
+		$default = "Unnamed repository; edit this file 'description' to name the repository.";
+
+		return trim($description) == $default;
+	}
+
 	public function getPath()
 	{
 		return $this->path;

@@ -20,4 +20,12 @@ class Model_RepositoryTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($defaultDescription, $repo->getDescription());
 	}
 
+	public function testDetectsIfRepositoryHasDefaultDescription()
+	{
+		$path = unpackRepository('empty');
+		$repo = new Model_Repository($path);
+
+		$this->assertTrue($repo->hasDefaultDescription());
+	}
+
 }
