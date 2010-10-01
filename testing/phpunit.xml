@@ -1,0 +1,10 @@
+<phpunit backupGlobals="false" backupStaticAttributes="true"
+	bootstrap="../application/bootstrap.php" colors="true">
+
+<!--	<testsuites>
+		<testsuite name="gittorama test suite">
+			<directory>.</directory>
+		</testsuite>
+	</testsuites>-->
+
+</phpunit>
