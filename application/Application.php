@@ -25,6 +25,12 @@ class Application
 	public function bootstrap()
 	{
 		$request = $this->getRequest();
+
+		if ($this->actionExists($request['action'])) {
+			$this->dispatch($request);
+		} else {
+			throw new Exception('Invalid request.');
+		}
 	}
 
 	/**
@@ -78,6 +84,21 @@ class Application
 		unset($parts[0]);
 
 		return $parts;
+	}
+
+	private function actionExists($action)
+	{
+		$actionFile = APPLICATION_PATH . '/Controller/' . ucfirst($action) . '.php';
+
+		return is_file($actionFile);
+	}
+
+	private function dispatch($request)
+	{
+		$class = 'Controller_' . ucfirst($request['action']);
+
+		$controller = new $class($request['params']);
+		$controller->run();
 	}
 
 }
