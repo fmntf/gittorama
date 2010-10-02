@@ -34,6 +34,7 @@ class Application
 		if ($this->actionExists($request['action'])) {
 			$this->dispatch($request);
 		} else {
+			var_dump($request);
 			throw new Exception('Invalid request.');
 		}
 	}
@@ -125,7 +126,7 @@ class Application
 		$config = APPLICATION_PATH . '/../config.php';
 
 		if (is_file($config)) {
-			require $config;
+			require_once $config;
 			$this->userConfiguration = new UserConfig();
 		} else {
 			throw new Exception('Missing configuration file. Copy config.php.dist to config.php and set your repositories.');

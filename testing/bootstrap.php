@@ -20,8 +20,8 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-require dirname(__FILE__) . '/../application/bootstrap.php';
-require dirname(__FILE__) . '/ControllerTestCase.php';
+require_once dirname(__FILE__) . '/../application/bootstrap.php';
+require_once dirname(__FILE__) . '/ControllerTestCase.php';
 
 function unpackRepository($name)
 {
