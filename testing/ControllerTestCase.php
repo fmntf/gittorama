@@ -20,17 +20,13 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-require dirname(__FILE__) . '/../application/bootstrap.php';
-require dirname(__FILE__) . '/ControllerTestCase.php';
-
-function unpackRepository($name)
+class ControllerTestCase extends PHPUnit_Framework_TestCase
 {
-	$uid = md5(microtime());
-	$path = '/tmp/gitfixture' . $uid;
+	public function dispatch($url)
+	{
+		$application = new Application();
+		$_SERVER['REQUEST_URI'] = $url;
 
-	exec("mkdir $path");
-	$source = dirname(__FILE__) . '/fixtures/' . $name . '.tar';
-	exec("tar xf $source -C $path");
-
-	return $path . '/' . $name;
+		return $application;
+	}
 }

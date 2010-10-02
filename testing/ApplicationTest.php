@@ -20,17 +20,26 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-require dirname(__FILE__) . '/../application/bootstrap.php';
-require dirname(__FILE__) . '/ControllerTestCase.php';
-
-function unpackRepository($name)
+class ApplicationTest extends ControllerTestCase
 {
-	$uid = md5(microtime());
-	$path = '/tmp/gitfixture' . $uid;
+	public function testDispatchToIndex()
+	{
+		$app = $this->dispatch('/');
 
-	exec("mkdir $path");
-	$source = dirname(__FILE__) . '/fixtures/' . $name . '.tar';
-	exec("tar xf $source -C $path");
+		$request = $app->getRequest();
 
-	return $path . '/' . $name;
+		$this->assertEquals('index', $request['action']);
+		$this->assertTrue(count($request['params']) == 0);
+	}
+
+	public function testDispatchToRepositoryPage()
+	{
+		$app = $this->dispatch('/repoName');
+
+		$request = $app->getRequest();
+
+		$this->assertEquals('repository', $request['action']);
+		$this->assertEquals('repoName', $request['params']['name']);
+	}
+
 }
