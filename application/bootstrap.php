@@ -20,17 +20,22 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-/**
- * Auto-load a class file. Do not call this!
- * 
- * @param string $class
- */
-function autoloader($class)
-{
-    $path = str_replace('_', '/', $class);
-    require_once $path . '.php';
+if (!defined('BOOTSTRAP_INCLUDED')) {
+	
+	/**
+	 * Auto-load a class file. Do not call this!
+	 * 
+	 * @param string $class
+	 */
+	function autoloader($class)
+	{
+		$path = str_replace('_', '/', $class);
+		require_once $path . '.php';
+	}
+
+	spl_autoload_register('autoloader');
+
+	define('APPLICATION_PATH', dirname(__FILE__));
+	define('BOOTSTRAP_INCLUDED', true);
+	
 }
-
-spl_autoload_register('autoloader');
-
-define('APPLICATION_PATH', dirname(__FILE__));
