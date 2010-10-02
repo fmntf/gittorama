@@ -23,6 +23,9 @@
 class View
 {
 
+	/**
+	 * @var StdClass
+	 */
 	private $properties;
 
 	public function __get($property)

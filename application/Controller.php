@@ -23,24 +23,57 @@
 class Controller
 {
 
+	/**
+	 * @var StdClass
+	 */
 	protected $view;
+
+	/**
+	 * @var array
+	 */
 	private $params;
 
-	public function  __construct(array $params)
+	/**
+	 * @var Configuration
+	 */
+	private $userConfig;
+
+	public function  __construct(Configuration $config, array $params)
 	{
 		$this->view = new StdClass;
+		$this->userConfig = $config;
 		$this->params = $params;
 	}
 
+	/**
+	 * Render a view script.
+	 *
+	 * @param string $name
+	 */
 	public function render($name)
 	{
 		$viewScript = APPLICATION_PATH . '/View/' . $name . '.phtml';
 		new View($this->view, $viewScript);
 	}
 
+	/**
+	 * Get request params.
+	 *
+	 * @return array
+	 */
 	protected function getParams()
 	{
 		return $this->params;
+	}
+
+	/**
+	 * Get user configuration
+	 *
+	 * @return Configuration
+	 */
+	protected function getUserConfiguration()
+	{
+		return $this->userConfig;
 	}
 
 }

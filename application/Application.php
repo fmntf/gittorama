@@ -22,6 +22,9 @@
 
 class Application
 {
+
+	private $userConfiguration;
+
 	public function bootstrap()
 	{
 		$this->loadConfiguration();
@@ -88,6 +91,12 @@ class Application
 		return $parts;
 	}
 
+	/**
+	 * Tests if the specified action exists.
+	 *
+	 * @param string $action
+	 * @return bool
+	 */
 	private function actionExists($action)
 	{
 		$actionFile = APPLICATION_PATH . '/Controller/' . ucfirst($action) . '.php';
@@ -95,20 +104,29 @@ class Application
 		return is_file($actionFile);
 	}
 
+	/**
+	 * Dispatch the request.
+	 *
+	 * @param array $request
+	 */
 	private function dispatch($request)
 	{
 		$class = 'Controller_' . ucfirst($request['action']);
 
-		$controller = new $class($request['params']);
+		$controller = new $class($this->userConfiguration, $request['params']);
 		$controller->run();
 	}
 
+	/**
+	 * Load user configuration from config.php
+	 */
 	private function loadConfiguration()
 	{
 		$config = APPLICATION_PATH . '/../config.php';
 
 		if (is_file($config)) {
 			require $config;
+			$this->userConfiguration = new UserConfig();
 		} else {
 			throw new Exception('Missing configuration file. Copy config.php.dist to config.php and set your repositories.');
 		}

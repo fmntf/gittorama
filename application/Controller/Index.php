@@ -24,6 +24,10 @@ class Controller_Index extends Controller
 {
 	public function run()
 	{
+		$repositories = $this->getUserConfiguration()->getRepositories();
+
+		var_dump($repositories);
+
 		$this->view->title = 'gittorama';
 
 		$this->render('index');
