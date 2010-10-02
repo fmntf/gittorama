@@ -32,7 +32,7 @@ class ApplicationTest extends ControllerTestCase
 		$this->assertTrue(count($request['params']) == 0);
 	}
 
-	public function testDispatchToRepositoryPage()
+	public function _testDispatchToRepositoryPage()
 	{
 		$app = $this->dispatch('/repoName');
 
