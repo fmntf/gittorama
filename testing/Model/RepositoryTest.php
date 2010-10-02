@@ -3,7 +3,7 @@
 class Model_RepositoryTest extends PHPUnit_Framework_TestCase
 {
 
-	public function testCanAccessToGitMetadata()
+	public function testCanAccessGitMetadata()
 	{
 		$path = unpackRepository('empty');
 		$repo = new Model_Repository($path);
