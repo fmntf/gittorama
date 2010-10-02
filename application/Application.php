@@ -24,6 +24,8 @@ class Application
 {
 	public function bootstrap()
 	{
+		$this->loadConfiguration();
+
 		$request = $this->getRequest();
 
 		if ($this->actionExists($request['action'])) {
@@ -99,6 +101,17 @@ class Application
 
 		$controller = new $class($request['params']);
 		$controller->run();
+	}
+
+	private function loadConfiguration()
+	{
+		$config = APPLICATION_PATH . '/../config.php';
+
+		if (is_file($config)) {
+			require $config;
+		} else {
+			throw new Exception('Missing configuration file. Copy config.php.dist to config.php and set your repositories.');
+		}
 	}
 
 }
