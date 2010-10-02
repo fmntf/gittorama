@@ -22,7 +22,9 @@
 
 class Configuration
 {
-
+	/**
+	 * @var array List of repository paths
+	 */
 	private $repositories;
 
 	public function __construct()
@@ -30,18 +32,31 @@ class Configuration
 		$this->setUp();
 	}
 
+	/**
+	 * Define here your own configuration.
+	 */
+	protected function setUp()
+	{
+	}
+
+	/**
+	 * Adds a repository to the configuration.
+	 *
+	 * @param string $path
+	 */
 	public function addRepository($path)
 	{
 		$this->repositories[] = $path;
 	}
 
+	/**
+	 * Get all the added repository.
+	 *
+	 * @return array
+	 */
 	public function getRepositories()
 	{
 		return $this->repositories;
-	}
-
-	protected function setUp()
-	{
 	}
 
 }

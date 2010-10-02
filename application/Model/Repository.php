@@ -23,18 +23,34 @@
 class Model_Repository
 {
 
+	/**
+	 * @var string Full path to the repository directory
+	 */
 	protected $path;
 
+	/**
+	 * @param string $path Full path to repository
+	 */
 	public function __construct($path)
 	{
 		$this->path = $path;
 	}
 
+	/**
+	 * Tests if the repository effectively exists.
+	 *
+	 * @return bool
+	 */
 	public function exists()
 	{
 		return is_dir($this->path . '/.git');
 	}
 
+	/**
+	 * Get the internal repository description
+	 *
+	 * @return string
+	 */
 	public function getDescription()
 	{
 		$description = file_get_contents($this->path . '/.git/description');
@@ -42,6 +58,12 @@ class Model_Repository
 		return trim($description);
 	}
 
+	/**
+	 * Tests if the repository has the default description test, of if it has
+	 * been changed.
+	 *
+	 * @return bool
+	 */
 	public function hasDefaultDescription()
 	{
 		$description = file_get_contents($this->path . '/.git/description');
@@ -50,6 +72,11 @@ class Model_Repository
 		return trim($description) == $default;
 	}
 
+	/**
+	 * Get the full path to the repository.
+	 *
+	 * @return string
+	 */
 	public function getPath()
 	{
 		return $this->path;
