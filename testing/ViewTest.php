@@ -20,27 +20,32 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-class View
+class ViewTest extends PHPUnit_Framework_TestCase
 {
-
-	/**
-	 * @var StdClass
-	 */
-	private $properties;
-
-	public function __get($property)
+	public function testRenderViewScript()
 	{
-		if (isset($this->properties->$property)) {
-			return $this->properties->$property;
-		} else {
-			throw new Exception('Unknown property: ' . $property);
+		$properties = new StdClass;
+		$properties->prop = 'erty';
+
+		ob_start();
+		$view = new View($properties, 'fixtures/view.phtml');
+		$rendering = ob_get_clean();
+
+		$this->assertEquals('<b>erty</b>', $rendering);
+	}
+
+	public function testCannotAccessToUnexistingProperties()
+	{
+		$properties = new StdClass;
+
+		try {
+			ob_start();
+			$view = new View($properties, 'fixtures/view.phtml');
+			$this->fail();
+		} catch (Exception $e) {
+			ob_clean();
 		}
 	}
 
-	public function __construct($data, $file)
-	{
-		$this->properties = $data;
 
-		include $file;
-	}
 }
