@@ -20,44 +20,13 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-class Configuration
+class UserConfig extends Configuration
 {
-	/**
-	 * @var array List of repository paths
-	 */
-	private $repositories;
-
-	public function __construct()
+	public function setUp()
 	{
-		$this->setUp();
+		$this->addRepository(
+			'Repository Alias',
+			'/path/to/repository/without/trailing/slash'
+		);
 	}
-
-	/**
-	 * Define here your own configuration.
-	 */
-	protected function setUp()
-	{
-	}
-
-	/**
-	 * Adds a repository to the configuration.
-	 *
-	 * @param string $alias
-	 * @param string $path
-	 */
-	public function addRepository($alias, $path)
-	{
-		$this->repositories[$alias] = $path;
-	}
-
-	/**
-	 * Get all the added repository.
-	 *
-	 * @return array
-	 */
-	public function getRepositories()
-	{
-		return $this->repositories;
-	}
-
 }

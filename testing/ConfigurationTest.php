@@ -26,13 +26,20 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 	public function testKeepsConfiguredPath()
 	{
 		$config = new SimpleConfig();
-		$this->assertEquals(1, count($config->getRepositories()));
+		$list = $config->getRepositories();
+
+		$this->assertEquals(1, count($list));
+		$this->assertArrayHasKey('Empty', $list);
 	}
 
 	public function testKeepsMoreThanOneRepository()
 	{
 		$config = new MultipleRepoConfig();
-		$this->assertEquals(2, count($config->getRepositories()));
+		$list = $config->getRepositories();
+
+		$this->assertEquals(2, count($list));
+		$this->assertArrayHasKey('Empty', $list);
+		$this->assertArrayHasKey('Simple', $list);
 	}
 
 }
@@ -44,7 +51,7 @@ class SimpleConfig extends Configuration
 	protected function setUp()
 	{
 		$path = unpackRepository('empty');
-		$this->addRepository($path);
+		$this->addRepository('Empty', $path);
 	}
 }
 
@@ -53,9 +60,9 @@ class MultipleRepoConfig extends Configuration
 	protected function setUp()
 	{
 		$path = unpackRepository('empty');
-		$this->addRepository($path);
+		$this->addRepository('Empty', $path);
 
 		$path = unpackRepository('simple');
-		$this->addRepository($path);
+		$this->addRepository('Simple', $path);
 	}
 }
