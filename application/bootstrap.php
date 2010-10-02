@@ -32,3 +32,5 @@ function autoloader($class)
 }
 
 spl_autoload_register('autoloader');
+
+define('APPLICATION_PATH', dirname(__FILE__));
