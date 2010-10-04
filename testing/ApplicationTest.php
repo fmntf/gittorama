@@ -22,9 +22,9 @@
 
 class ApplicationTest extends ControllerTestCase
 {
-	public function testDispatchToIndex()
+	public function testRecognizesIndexAddress()
 	{
-		$app = $this->dispatch('/');
+		$app = $this->getApplicationInstance('/');
 
 		$request = $app->getRequest();
 
@@ -32,9 +32,15 @@ class ApplicationTest extends ControllerTestCase
 		$this->assertTrue(count($request['params']) == 0);
 	}
 
+	public function testBootstrapsApplication()
+	{
+		$app = $this->getApplicationInstance('/');
+		$this->bootstrap($app);
+	}
+
 	public function _testDispatchToRepositoryPage()
 	{
-		$app = $this->dispatch('/repoName');
+		$app = $this->getApplicationInstance('/repoName');
 
 		$request = $app->getRequest();
 

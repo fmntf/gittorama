@@ -22,11 +22,32 @@
 
 class ControllerTestCase extends PHPUnit_Framework_TestCase
 {
-	public function dispatch($url)
+
+	/**
+	 * Get an application instance, setting the request URL.
+	 * Warning: do not call this twice with different URLs!
+	 * 
+	 * @param string $url
+	 * @return Application
+	 */
+	public function getApplicationInstance($url)
 	{
 		$application = new Application();
 		$_SERVER['REQUEST_URI'] = $url;
 
 		return $application;
+	}
+
+	/**
+	 * Bootstraps the given application.
+	 *
+	 * @param Application $app
+	 * @return string HTML output
+	 */
+	public function bootstrap(Application $app)
+	{
+		ob_start();
+		$app->bootstrap();
+		return ob_get_clean();
 	}
 }
