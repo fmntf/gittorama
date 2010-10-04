@@ -47,5 +47,41 @@ class ViewTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+	public function testUrlFriendlyUrlsAreAlwaysLowercase()
+	{
+		$view = $this->getView();
+		$translated = $view->toUrl('Test');
 
+		$this->assertEquals('test', $translated);
+	}
+
+	public function testReplacesSpacesWithHypensString()
+	{
+		$view = $this->getView();
+		$translated = $view->toUrl('my repo');
+
+		$this->assertEquals('my-repo', $translated);
+	}
+
+	public function testReplacesAccentedLettersInString()
+	{
+		$view = $this->getView();
+		$translated = $view->toUrl('àèéìòù');
+
+		$this->assertEquals('aeeiou', $translated);
+	}
+
+	public function testRemovesSibmolsInString()
+	{
+		$view = $this->getView();
+		$translated = $view->toUrl("repo(sitory)!i,s.n'i:c;e?");
+
+		$this->assertEquals('repositoryisnice', $translated);
+	}
+
+	private function getView()
+	{
+		exec('touch /tmp/gittoramafakeview');
+		return new View(new StdClass, '/tmp/gittoramafakeview');
+	}
 }

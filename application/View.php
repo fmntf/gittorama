@@ -43,4 +43,18 @@ class View
 
 		include $file;
 	}
+
+	/**
+	 * Make a string URL friendly.
+	 *
+	 * @param string $string
+	 * @return string
+	 */
+	public function toUrl($string)
+	{
+		$search  = array('à', 'è', 'é', 'ì', 'ò', 'ù', ' ', '(', ')', ';', ',', '.', ':', '!', '?', "'");
+		$replace = array('a', 'e', 'e', 'i', 'o', 'u', '-', '',  '',  '',  '',  '',  '',  '',  '',  '');
+
+		return str_replace($search, $replace, strtolower($string));
+	}
 }

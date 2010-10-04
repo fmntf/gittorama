@@ -1,1 +1,10 @@
-<h1><?php echo $this->title; ?></h1>
+<h1>gittorama</h1>
+
+<p><?php echo _('List of repositories'); ?></p>
+
+<?php
+	foreach ($this->repositories as $name => $path) {
+		$url = $this->toUrl($name);
+		echo '<a href="' . $url . '">' . $name . '</a>';
+	}
+?>

@@ -26,9 +26,7 @@ class Controller_Index extends Controller
 	{
 		$repositories = $this->getUserConfiguration()->getRepositories();
 
-		var_dump($repositories);
-
-		$this->view->title = 'gittorama';
+		$this->view->repositories = $repositories;
 
 		$this->render('index');
 	}
