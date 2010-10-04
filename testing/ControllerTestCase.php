@@ -50,4 +50,5 @@ class ControllerTestCase extends PHPUnit_Framework_TestCase
 		$app->bootstrap();
 		return ob_get_clean();
 	}
+
 }
