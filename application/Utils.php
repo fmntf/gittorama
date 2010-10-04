@@ -20,29 +20,8 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-class View
+class Utils
 {
-
-	/**
-	 * @var StdClass
-	 */
-	private $properties;
-
-	public function __get($property)
-	{
-		if (isset($this->properties->$property)) {
-			return $this->properties->$property;
-		} else {
-			throw new Exception('Unknown property: ' . $property);
-		}
-	}
-
-	public function __construct($data, $file)
-	{
-		$this->properties = $data;
-
-		include $file;
-	}
 
 	/**
 	 * Make a string URL friendly.
@@ -50,8 +29,12 @@ class View
 	 * @param string $string
 	 * @return string
 	 */
-	public function toUrl($string)
+	public static function toUrl($string)
 	{
-		return Utils::toUrl($string);
+		$search  = array('à', 'è', 'é', 'ì', 'ò', 'ù', ' ', '(', ')', ';', ',', '.', ':', '!', '?', "'");
+		$replace = array('a', 'e', 'e', 'i', 'o', 'u', '-', '',  '',  '',  '',  '',  '',  '',  '',  '');
+
+		return str_replace($search, $replace, strtolower($string));
 	}
+
 }

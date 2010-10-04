@@ -20,45 +20,37 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-class ControllerTest extends PHPUnit_Framework_TestCase
+class UtilsTest extends PHPUnit_Framework_TestCase
 {
-
-	private function getController()
-	{
-		$conf = new Configuration();
-		return new Controller($conf, array());
-	}
-
 	public function testUrlFriendlyUrlsAreAlwaysLowercase()
 	{
-		$controller = $this->getController();
-		$translated = $controller->toUrl('Test');
+		$utils = new Utils();
+		$translated = $utils->toUrl('Test');
 
 		$this->assertEquals('test', $translated);
 	}
 
 	public function testReplacesSpacesWithHypensString()
 	{
-		$controller = $this->getController();
-		$translated = $controller->toUrl('my repo');
+		$utils = new Utils();
+		$translated = $utils->toUrl('my repo');
 
 		$this->assertEquals('my-repo', $translated);
 	}
 
 	public function testReplacesAccentedLettersInString()
 	{
-		$controller = $this->getController();
-		$translated = $controller->toUrl('àèéìòù');
+		$utils = new Utils();
+		$translated = $utils->toUrl('àèéìòù');
 
 		$this->assertEquals('aeeiou', $translated);
 	}
 
 	public function testRemovesSibmolsInString()
 	{
-		$controller = $this->getController();
-		$translated = $controller->toUrl("repo(sitory)!i,s.n'i:c;e?");
+		$utils = new Utils();
+		$translated = $utils->toUrl("repo(sitory)!i,s.n'i:c;e?");
 
 		$this->assertEquals('repositoryisnice', $translated);
 	}
-
 }
