@@ -1,0 +1,11 @@
+<h1><?php echo $this->name; ?></h1>
+
+<?php
+	if ($this->hasDefaultDescription) {
+		$description = _('This repository has the default description. Click here to discover how to change it.');
+	} else {
+		$description = $this->description;
+	}
+?>
+
+<p><?php echo $description; ?></p>

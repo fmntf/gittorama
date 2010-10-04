@@ -20,32 +20,30 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-class ApplicationTest extends ControllerTestCase
+class Controller_Repository extends Controller
 {
-	public function testRecognizesIndexAddress()
+	public function run()
 	{
-		$app = $this->getApplicationInstance('/');
+		list ($repoName, $repoPath) = $this->detectRepository();
+		$repository = new Model_Repository($repoPath);
 
-		$request = $app->getRequest();
+		$this->view->name = $repoName;
+		$this->view->description = $repository->getDescription();
+		$this->view->hasDefaultDescription = $repository->hasDefaultDescription();
 
-		$this->assertEquals('index', $request['action']);
-		$this->assertTrue(count($request['params']) == 0);
+		$this->render('repository');
 	}
 
-	public function testBootstrapsApplication()
+	private function detectRepository()
 	{
-		$app = $this->getApplicationInstance('/');
-		$this->bootstrap($app);
+		$params = $this->getParams();
+
+		foreach ($this->getUserConfiguration()->getRepositories() as $name => $path) {
+			if (Utils::toUrl($name) == $params['name']) {
+				return array($name, $path);
+			}
+		}
+
+		throw new Exception('The specified repository could not be found!');
 	}
-
-	public function testDispatchToRepositoryPage()
-	{
-		$app = $this->getApplicationInstance('/repoName');
-
-		$request = $app->getRequest();
-
-		$this->assertEquals('repository', $request['action']);
-		$this->assertEquals('repoName', $request['params']['name']);
-	}
-
 }

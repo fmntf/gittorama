@@ -72,12 +72,7 @@ class Model_Repository
 		return trim($description) == $default;
 	}
 
-	/**
-	 * Get the full path to the repository.
-	 *
-	 * @return string
-	 */
-	public function getPath()
+	public function getName()
 	{
 		return $this->path;
 	}
