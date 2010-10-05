@@ -94,4 +94,14 @@ class Model_RepositoryTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse($repo->hasBranch('mastah'));
 	}
 
+	public function testGetsLogsOfABranch()
+	{
+		$path = unpackRepository('simple');
+		$repo = new Model_Repository($path);
+
+		$logs = $repo->getLogs('master');
+		$this->assertEquals(1, count($logs));
+		$this->isInstanceOf('Model_Log', $logs[0]);
+	}
+
 }

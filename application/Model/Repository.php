@@ -121,4 +121,23 @@ class Model_Repository
 		return $found;
 	}
 
+
+	public function getLogs($branchName)
+	{
+		foreach ($this->getBranches() as $branch) {
+			if ($branch['name'] == $branchName) $hash = $branch['hash'];
+		}
+
+		$logs = array();
+
+		$path = $this->path . '/.git';
+		$result = shell_exec("git --git-dir=$path rev-list $branchName");
+
+		foreach (explode("\n", trim($result)) as $hash) {
+			$logs[] = new Model_Log($path, $hash);
+		}
+
+		return $logs;
+	}
+
 }
