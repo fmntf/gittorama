@@ -49,20 +49,18 @@ class Application
 		$parts = $this->getRequestParts();
 		$params = array();
 
-		switch (count($parts)) {
+		if (count($parts) == 0) {
+			$parts[1] = 'index';
+		}
 
-			case 0:
-				$action = 'index';
-				break;
+		$action = $parts[1];
 
-			case 1:
-				$action = 'repository';
-				$params['name'] = $parts[1];
-				break;
+		for ($i = 2; $i < count($parts); $i=$i+2) {
 
-//			default:
-//				var_dump(count($parts));
-//				var_dump($parts);
+			$param = $parts[$i];
+			$value = $parts[$i+1];
+
+			$params[$param] = $value;
 
 		}
 

@@ -40,7 +40,7 @@ class ApplicationTest extends ControllerTestCase
 
 	public function testDispatchToRepositoryPage()
 	{
-		$app = $this->getApplicationInstance('/repoName');
+		$app = $this->getApplicationInstance('/repository/name/repoName');
 
 		$request = $app->getRequest();
 

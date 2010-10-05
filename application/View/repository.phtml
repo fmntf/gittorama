@@ -20,7 +20,7 @@
 <h3>Branches</h3>
 <?php
 	foreach ($this->branches as $branch) {
-		$url = $this->toUrl($this->name) . '/' . $branch['name'];
+		$url = '/repository' . $this->getUrl(array('branch' => $branch['name']));
 		$detail = '<em>' . $branch['message'] . '</em> -- on ' . $branch['hash'];
 		echo "<a href='$url'>{$branch['name']}</a> - $detail";
 	}

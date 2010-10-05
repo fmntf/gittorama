@@ -28,6 +28,11 @@ class View
 	 */
 	private $properties;
 
+	/**
+	 * @var array
+	 */
+	private $requestParams;
+
 	public function __get($property)
 	{
 		if (isset($this->properties->$property)) {
@@ -37,11 +42,14 @@ class View
 		}
 	}
 
-	public function __construct($data, $file)
+	public function __construct($data, $file, $autoRender = true, $requestParams = array())
 	{
 		$this->properties = $data;
+		$this->requestParams = $requestParams;
 
-		include $file;
+		if ($autoRender) {
+			include $file;
+		}
 	}
 
 	/**
@@ -53,5 +61,29 @@ class View
 	public function toUrl($string)
 	{
 		return Utils::toUrl($string);
+	}
+
+
+	/**
+	 * Adds (or replace) the actual request parameters with the given params.
+	 *
+	 * @param array $params
+	 * @return string
+	 */
+	public function getUrl(array $params)
+	{
+		$requestParams = $this->requestParams;
+
+		foreach ($params as $param => $value) {
+			$requestParams[$param] = $value;
+		}
+
+		$url = '/';
+		
+		foreach ($requestParams as $param => $value) {
+			$url .= "$param/$value/";
+		}
+
+		return $url;
 	}
 }

@@ -79,9 +79,34 @@ class ViewTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('repositoryisnice', $translated);
 	}
 
-	private function getView()
+	public function testCanCreateUrlFromEmptyRequest()
 	{
-		exec('touch /tmp/gittoramafakeview');
-		return new View(new StdClass, '/tmp/gittoramafakeview');
+		$view = $this->getView();
+
+		$url = $view->getUrl(array(
+			'a' => 'b',
+			'c' => 'd'
+		));
+
+		$this->assertEquals('/a/b/c/d/', $url);
+	}
+
+	public function testCanCreateUrlFromExistingRequest()
+	{
+		$view = $this->getView(array(
+			'name' => 'pippo'
+		));
+
+		$url = $view->getUrl(array(
+			'age' => 'dummy',
+			'name' => 'pippa'
+		));
+
+		$this->assertEquals('/name/pippa/age/dummy/', $url);
+	}
+
+	private function getView($params = array())
+	{
+		return new View(new StdClass, '/dev/null', false, $params);
 	}
 }

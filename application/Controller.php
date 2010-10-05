@@ -53,7 +53,7 @@ class Controller
 	public function render($name)
 	{
 		$viewScript = APPLICATION_PATH . '/View/' . $name . '.phtml';
-		new View($this->view, $viewScript);
+		new View($this->view, $viewScript, true, $this->getParams());
 	}
 
 	/**
