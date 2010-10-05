@@ -32,8 +32,7 @@ class Controller_Repository extends Controller
 		$this->view->hasDefaultDescription = $repository->hasDefaultDescription();
 
 		$this->setupBranches($repository);
-
-//		$this->view->logs = $repository->getLogs();
+		$this->setupLogs($repository);
 
 		$this->render('repository');
 	}
@@ -49,6 +48,11 @@ class Controller_Repository extends Controller
 		}
 
 		$this->view->branch = $activeBranch;
+	}
+
+	private function setupLogs(Model_Repository $repository)
+	{
+//		$this->view->logs = $repository->getLogs();
 	}
 
 	private function detectRepository()
