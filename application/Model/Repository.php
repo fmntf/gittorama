@@ -72,9 +72,28 @@ class Model_Repository
 		return trim($description) == $default;
 	}
 
-	public function getName()
+	public function getBranches()
 	{
-		return $this->path;
+		$path = $this->path . '/.git';
+		$result = shell_exec("git --git-dir=$path branch -v --no-color");
+
+		$default = "[\*]?";
+		$noun = "[a-zA-Z0-9_\-]+";
+		$commit = "[a-z0-9]+";
+		$phrase = ".*";
+		$space = "\s*";
+
+		$pattern = "/($default)$space($noun)$space($commit)$space($phrase)/";
+		
+		preg_match($pattern, $result, $matches);
+
+		return array(
+			array(
+				'name' => $matches[2],
+				'hash' => $matches[3],
+				'message' => $matches[4],
+			)
+		);
 	}
 
 }

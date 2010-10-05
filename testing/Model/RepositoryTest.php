@@ -48,4 +48,22 @@ class Model_RepositoryTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($repo->hasDefaultDescription());
 	}
 
+	public function testGetsAListOfBranches()
+	{
+		$path = unpackRepository('simple');
+		$repo = new Model_Repository($path);
+
+		$expected = array(
+			array(
+				'name' => 'master',
+				'hash' => 'db57541',
+				'message' => 'Simple commit message'
+			)
+		);
+
+		$this->assertEquals($expected, $repo->getBranches());
+	}
+
+
+
 }
