@@ -31,7 +31,7 @@ class Controller_Repository extends Controller
 		$this->view->description = $repository->getDescription();
 		$this->view->hasDefaultDescription = $repository->hasDefaultDescription();
 
-		$this->view->logs = $repository->getLogs();
+//		$this->view->logs = $repository->getLogs();
 		$this->view->branches = $repository->getBranches();
 
 		$this->render('repository');
