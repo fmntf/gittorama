@@ -67,6 +67,23 @@ class Controller
 	}
 
 	/**
+	 * Gets the value of the specified request parameter.
+	 * If that parameter is not in the request, provides the specified default value.
+	 *
+	 * @param string $param
+	 * @param mixed $defaultValue
+	 * @return mixed
+	 */
+	protected function getParam($param, $defaultValue)
+	{
+		if (!isset($this->params[$param])) {
+			return $defaultValue;
+		}
+
+		return $this->params[$param];
+	}
+
+	/**
 	 * Get user configuration
 	 *
 	 * @return Configuration
