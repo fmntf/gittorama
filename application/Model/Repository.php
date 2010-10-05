@@ -84,16 +84,19 @@ class Model_Repository
 		$space = "\s*";
 
 		$pattern = "/($default)$space($noun)$space($commit)$space($phrase)/";
-		
-		preg_match($pattern, $result, $matches);
 
-		return array(
-			array(
+		$branches = array();
+
+		foreach (explode("\n", trim($result)) as $rawBranch) {
+			preg_match($pattern, $rawBranch, $matches);
+			$branches[] = array(
 				'name' => $matches[2],
 				'hash' => $matches[3],
 				'message' => $matches[4],
-			)
-		);
+			);
+		}
+
+		return $branches;
 	}
 
 }

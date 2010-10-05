@@ -64,6 +64,27 @@ class Model_RepositoryTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $repo->getBranches());
 	}
 
+	public function testGetsAListOfBranchesInComplicatedRepo()
+	{
+		$path = unpackRepository('pro');
+		$repo = new Model_Repository($path);
+
+		$expected = array(
+			array(
+				'name' => 'master',
+				'hash' => '2c32835',
+				'message' => '3rd commit'
+			),
+			array(
+				'name' => 'mybranch',
+				'hash' => '3040837',
+				'message' => 'first commit of branch'
+			),
+		);
+
+		$this->assertEquals($expected, $repo->getBranches());
+	}
+
 
 
 }
