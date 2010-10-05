@@ -31,10 +31,24 @@ class Controller_Repository extends Controller
 		$this->view->description = $repository->getDescription();
 		$this->view->hasDefaultDescription = $repository->hasDefaultDescription();
 
+		$this->setupBranches($repository);
+
 //		$this->view->logs = $repository->getLogs();
-		$this->view->branches = $repository->getBranches();
 
 		$this->render('repository');
+	}
+
+	private function setupBranches(Model_Repository $repository)
+	{
+		$this->view->branches = $repository->getBranches();
+
+		$activeBranch = $this->getParam('branch', 'master');
+
+		if (!$repository->hasBranch($activeBranch)) {
+			$activeBranch = 'master';
+		}
+
+		$this->view->branch = $activeBranch;
 	}
 
 	private function detectRepository()

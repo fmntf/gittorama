@@ -72,11 +72,17 @@ class Model_Repository
 		return trim($description) == $default;
 	}
 
+	/**
+	 * Get all the branches in the repository.
+	 * 
+	 * @return array
+	 */
 	public function getBranches()
 	{
 		$path = $this->path . '/.git';
 		$result = shell_exec("git --git-dir=$path branch -v --no-color");
 
+		// @todo: move me
 		$default = "[\*]?";
 		$noun = "[a-zA-Z0-9_\-]+";
 		$commit = "[a-z0-9]+";
@@ -97,6 +103,22 @@ class Model_Repository
 		}
 
 		return $branches;
+	}
+
+	/**
+	 * Detects if the repository has a branch with the specified name.
+	 *
+	 * @param string $name
+	 * @return boolean
+	 */
+	public function hasBranch($name)
+	{
+		$found = false;
+		foreach ($this->getBranches() as $branch) {
+			if ($branch['name'] == $name) $found = true;
+		}
+
+		return $found;
 	}
 
 }

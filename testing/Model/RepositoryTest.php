@@ -85,6 +85,13 @@ class Model_RepositoryTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $repo->getBranches());
 	}
 
+	public function testDetectsIfABranchExists()
+	{
+		$path = unpackRepository('simple');
+		$repo = new Model_Repository($path);
 
+		$this->assertTrue($repo->hasBranch('master'));
+		$this->assertFalse($repo->hasBranch('mastah'));
+	}
 
 }
