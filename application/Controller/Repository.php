@@ -31,13 +31,12 @@ class Controller_Repository extends Controller
 		$this->view->description = $repository->getDescription();
 		$this->view->hasDefaultDescription = $repository->hasDefaultDescription();
 
-		$this->setupBranches($repository);
-		$this->setupLogs($repository);
+		$this->setupObjects($repository);
 
 		$this->render('repository');
 	}
 
-	private function setupBranches(Model_Repository $repository)
+	private function setupObjects(Model_Repository $repository)
 	{
 		$this->view->branches = $repository->getBranches();
 
@@ -48,11 +47,7 @@ class Controller_Repository extends Controller
 		}
 
 		$this->view->branch = $activeBranch;
-	}
-
-	private function setupLogs(Model_Repository $repository)
-	{
-//		$this->view->logs = $repository->getLogs();
+		$this->view->logs = $repository->getLogs($activeBranch);
 	}
 
 	private function detectRepository()
@@ -67,4 +62,5 @@ class Controller_Repository extends Controller
 
 		throw new Exception('The specified repository could not be found!');
 	}
+	
 }
