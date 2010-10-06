@@ -13,7 +13,13 @@
 <h3>Logs</h3>
 <?php
 	foreach ($this->logs as $entry) {
-		var_dump($entry);
+		$info = $entry->getInfo();
+		$hash = '<a href="/commmit/hash/' . $info['hash'] . '">' . $info['hash'] . '</a>';
+		$author = $info['author']['name'];
+			//@todo: provide also email
+			//@todo: if committer is different, notice this
+		$date = date("d-m-y H:i", $info['author']['timestamp']);
+		echo "Commit: $hash -- by $author on $date <br/>";
 	}
 ?>
 
