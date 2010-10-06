@@ -19,7 +19,8 @@
 			//@todo: provide also email
 			//@todo: if committer is different, notice this
 		$date = date("d-m-y H:i", $info['author']['timestamp']);
-		echo "Commit: $hash -- by $author on $date <br/>";
+		$files = "see <a href='/tree/hash/{$info['hash']}'>files</a> at this point";
+		echo "Commit: $hash -- by $author on $date -- $files<br/>";
 	}
 ?>
 
