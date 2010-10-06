@@ -131,7 +131,8 @@ class Model_Repository
 		$logs = array();
 
 		$path = $this->path . '/.git';
-		$result = shell_exec("git --git-dir=$path rev-list $branchName");
+		$command = "git --git-dir=$path rev-list $branchName";
+		$result = shell_exec($command);
 
 		foreach (explode("\n", trim($result)) as $hash) {
 			$logs[] = new Model_Log($path, $hash);

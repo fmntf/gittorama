@@ -104,4 +104,18 @@ class Model_RepositoryTest extends PHPUnit_Framework_TestCase
 		$this->isInstanceOf('Model_Log', $logs[0]);
 	}
 
+	public function testGetsLogsOfABranchInProRepository()
+	{
+		$path = unpackRepository('pro');
+		$repo = new Model_Repository($path);
+
+		$logs = $repo->getLogs('master');
+
+		$this->assertEquals(3, count($logs));
+		$this->isInstanceOf('Model_Log', $logs[0]);
+
+		$commitInfo = $logs[1]->getInfo();
+		$this->assertEquals('second commit', $commitInfo['message']);
+	}
+
 }
