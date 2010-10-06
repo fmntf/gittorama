@@ -1,2 +1,36 @@
 <h1>Commit details for <?php echo $this->hash; ?></h1>
 
+<?php
+	$parentUrl = $this->getUrl(array(
+		'hash' => $this->details['parent']
+	));
+
+	$treeUrl = "/tree/hash/" . $this->details['tree'];
+?>
+
+<a href="<?php echo $parentUrl; ?>">Parent commit</a> --
+<a href="<?php echo $treeUrl; ?>">Tree</a>
+
+<br /><br />
+
+<h3>Author</h3>
+<?php echo getPerson($this->details, 'author'); ?>
+
+<?php
+	if ($this->details['author'] !== $this->details['committer']) {
+		echo "<h3>Committer</h3>";
+		echo getPerson('author');
+	}
+?>
+
+<?php
+
+	function getPerson($details, $kind)
+	{
+		$html  = $details['author']['name'] . " <{$details['author']['email']}><br />";
+		$html .= "on " . date('d-m-y H:i', $details['author']['timestamp']);
+
+		return $html;
+	}
+
+?>
