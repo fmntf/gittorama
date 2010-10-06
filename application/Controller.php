@@ -74,7 +74,7 @@ class Controller
 	 * @param mixed $defaultValue
 	 * @return mixed
 	 */
-	protected function getParam($param, $defaultValue)
+	protected function getParam($param, $defaultValue = null)
 	{
 		if (!isset($this->params[$param])) {
 			return $defaultValue;
