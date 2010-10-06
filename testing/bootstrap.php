@@ -32,5 +32,5 @@ function unpackRepository($name)
 	$source = dirname(__FILE__) . '/fixtures/' . $name . '.tar';
 	exec("tar xf $source -C $path");
 
-	return $path . '/' . $name;
+	return $path . '/' . $name . '/.git';
 }

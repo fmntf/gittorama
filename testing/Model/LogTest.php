@@ -26,7 +26,7 @@ class Model_LogTest extends PHPUnit_Framework_TestCase
 	public function testCanGetLogInfo()
 	{
 		$path = unpackRepository('simple');
-		$log = new Model_Log($path . '/.git', 'db57541ba4f7686c2063d7d1290eba612b30bf59');
+		$log = new Model_Log($path, 'db57541ba4f7686c2063d7d1290eba612b30bf59');
 
 		$info = $log->getInfo();
 

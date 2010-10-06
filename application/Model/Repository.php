@@ -43,7 +43,7 @@ class Model_Repository
 	 */
 	public function exists()
 	{
-		return is_dir($this->path . '/.git');
+		return is_dir($this->path . '/objects') && is_dir($this->path . '/refs');
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Model_Repository
 	 */
 	public function getDescription()
 	{
-		$description = file_get_contents($this->path . '/.git/description');
+		$description = file_get_contents($this->path . '/description');
 
 		return trim($description);
 	}
@@ -66,7 +66,7 @@ class Model_Repository
 	 */
 	public function hasDefaultDescription()
 	{
-		$description = file_get_contents($this->path . '/.git/description');
+		$description = file_get_contents($this->path . '/description');
 		$default = "Unnamed repository; edit this file 'description' to name the repository.";
 
 		return trim($description) == $default;
@@ -79,8 +79,8 @@ class Model_Repository
 	 */
 	public function getBranches()
 	{
-		$path = $this->path . '/.git';
-		$result = shell_exec("git --git-dir=$path branch -v --no-color");
+		$command = "git --git-dir={$this->path} branch -v --no-color";
+		$result = shell_exec($command);
 
 		// @todo: move me
 		$default = "[\*]?";
@@ -130,12 +130,11 @@ class Model_Repository
 
 		$logs = array();
 
-		$path = $this->path . '/.git';
-		$command = "git --git-dir=$path rev-list $branchName";
+		$command = "git --git-dir={$this->path} rev-list $branchName";
 		$result = shell_exec($command);
 
 		foreach (explode("\n", trim($result)) as $hash) {
-			$logs[] = new Model_Log($path, $hash);
+			$logs[] = new Model_Log($this->path, $hash);
 		}
 
 		return $logs;
