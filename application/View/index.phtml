@@ -4,7 +4,6 @@
 
 <?php
 	foreach ($this->repositories as $name => $path) {
-		$url = $this->toUrl($name);
-		echo '<a href="repository/name/' . $url . '">' . $name . '</a>';
+		echo "<a href='/repository/name/$name'>$name</a>";
 	}
 ?>

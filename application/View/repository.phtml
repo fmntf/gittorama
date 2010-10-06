@@ -14,7 +14,8 @@
 <?php
 	foreach ($this->logs as $entry) {
 		$info = $entry->getInfo();
-		$hash = '<a href="/commmit/hash/' . $info['hash'] . '">' . $info['hash'] . '</a>';
+		$url = "/commit/repository/{$this->name}/hash/{$info['hash']}";
+		$hash = "<a href='$url'>" . $info['hash'] . '</a>';
 		$author = $info['author']['name'];
 			//@todo: provide also email
 			//@todo: if committer is different, notice this
