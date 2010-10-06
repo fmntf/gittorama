@@ -25,20 +25,61 @@ class Model_Log
 
 	private $path;
 	private $hash;
+	private $info;
 
 	public function __construct($path, $hash)
 	{
 		$this->path = $path;
 		$this->hash = $hash;
+	}
 
-		$this->fetchInfo();
+	public function getInfo()
+	{
+		if ($this->info === null) {
+			$this->info = $this->fetchInfo();
+		}
+
+		return $this->info;
 	}
 
 	private function fetchInfo()
 	{
-		$result = shell_exec("git --git-dir={$this->path} rev-list {$this->hash} --max-count=1 --header");
+		$result = trim(shell_exec("git --git-dir={$this->path} rev-list {$this->hash} --max-count=1 --header"));
 
-//		var_dump($result);
+		$default = "[\*]?";
+		$noun = "[\w\-\.]+";
+		$hash = "[a-z0-9]+";
+		$return = "\n";
+		$space = "\s+";
+		$phrase = ".*";
+		$multiLinePharse = "[\w\W\s]*";
+		$contact = "<($noun@$noun\.$noun)>";
+		$time = "(\d+) \+(\d+)";
+
+		$pattern  = "/($hash)$return";
+		$pattern .= "tree ". "($hash)$return";
+		$pattern .= "author " . "($phrase)$space($contact)$space($time)$return";
+		$pattern .= "committer " . "($phrase)$space($contact)$space($time)$return";
+		$pattern .= "($multiLinePharse)/";
+
+		preg_match($pattern, $result, $matches);
+
+		return array(
+			'tree' => $matches[2],
+			'author' => array(
+				'name' => $matches[3],
+				'email' => $matches[5],
+				'timestamp' => $matches[7],
+				'offset' => $matches[8]
+			),
+			'committer' => array(
+				'name' => $matches[9],
+				'email' => $matches[11],
+				'timestamp' => $matches[13],
+				'offset' => $matches[14]
+			),
+			'message' => trim($matches[15])
+		);
 	}
 
 }
