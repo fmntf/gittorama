@@ -33,6 +33,8 @@ class Model_TreeTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(1, count($files));
 		$this->assertEquals('alone.txt', $files[0]['name']);
+		$this->assertEquals('3b7613d607009961a6d37a96e6c1f73f09c44ef4', $files[0]['hash']);
+		$this->assertEquals('blob', $files[0]['type']);
 	}
 
 	public function testListsFilesOfProRepository()
