@@ -30,6 +30,7 @@ class Model_LogTest extends PHPUnit_Framework_TestCase
 
 		$info = $log->getInfo();
 
+		$this->assertEquals('db57541ba4f7686c2063d7d1290eba612b30bf59', $info['hash']);
 		$this->assertEquals('ac18b0b728d770f6864046e7d3b8c7f1ca09cf1f', $info['tree']);
 		$this->assertEquals('Simple commit message', $info['message']);
 		$this->assertEquals('Francesco Montefoschi', $info['author']['name']);

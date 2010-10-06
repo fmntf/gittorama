@@ -69,6 +69,7 @@ class Model_Log
 		$parent = ($matches[4] == '') ? null : $matches[4];
 
 		return array(
+			'hash' => $matches[1],
 			'tree' => $matches[2],
 			'parent' => $parent,
 			'author' => array(
