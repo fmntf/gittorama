@@ -37,4 +37,23 @@ class Utils
 		return str_replace($search, $replace, strtolower($string));
 	}
 
+	/**
+	 * Detect the path of a repository, by it's name and the configuration.
+	 * 
+	 * @param Configuration $configuration
+	 * @param string $repository
+	 * @throws Exception
+	 * @return string
+	 */
+	public static function getRepositoryPath(Configuration $configuration, $repository)
+	{
+		foreach ($configuration->getRepositories() as $name => $path) {
+			if ($name == $repository) {
+				return $path;
+			}
+		}
+
+		throw new Exception('The specified repository could not be found!');
+	}
+
 }

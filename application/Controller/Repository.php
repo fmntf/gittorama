@@ -24,7 +24,9 @@ class Controller_Repository extends Controller
 {
 	public function run()
 	{
-		list ($repoName, $repoPath) = $this->detectRepository();
+		$repoName = $this->getParam('name');
+		$repoPath = Utils::getRepositoryPath($this->getUserConfiguration(), $repoName);
+
 		$repository = new Model_Repository($repoPath);
 
 		$this->view->name = $repoName;
@@ -50,17 +52,4 @@ class Controller_Repository extends Controller
 		$this->view->logs = $repository->getLogs($activeBranch);
 	}
 
-	private function detectRepository()
-	{
-		$params = $this->getParams();
-
-		foreach ($this->getUserConfiguration()->getRepositories() as $name => $path) {
-			if (Utils::toUrl($name) == $params['name']) {
-				return array($name, $path);
-			}
-		}
-
-		throw new Exception('The specified repository could not be found!');
-	}
-	
 }
