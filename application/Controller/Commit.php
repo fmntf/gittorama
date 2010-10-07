@@ -26,9 +26,10 @@ class Controller_Commit extends Controller
 	{
 		$hash = $this->getParam('hash');
 		$this->view->hash = $hash;
+		$this->view->repository = $this->getParam('repository');
 
 		$conf = $this->getUserConfiguration();
-		$path = Utils::getRepositoryPath($conf, $this->getParam('repository'));
+		$path = Utils::getRepositoryPath($conf, $this->view->repository);
 
 		$commit = new Model_Log($path, $hash);
 

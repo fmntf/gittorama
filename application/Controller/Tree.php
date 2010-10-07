@@ -24,8 +24,13 @@ class Controller_Tree extends Controller
 {
 	public function run()
 	{
-
 		$this->view->hash = $this->getParam('hash');
+
+		$conf = $this->getUserConfiguration();
+		$path = Utils::getRepositoryPath($conf, $this->getParam('repository'));
+		$tree = new Model_Tree($path, $this->view->hash);
+
+		$this->view->files = $tree->getFiles();
 
 		$this->render('tree');
 	}

@@ -4,8 +4,9 @@
 	$parentUrl = $this->getUrl(array(
 		'hash' => $this->details['parent']
 	));
+	$repo = $this->repository;
 
-	$treeUrl = "/tree/hash/" . $this->details['tree'];
+	$treeUrl = "/tree/repository/$repo/hash/" . $this->details['tree'];
 ?>
 
 <a href="<?php echo $parentUrl; ?>">Parent commit</a> --
