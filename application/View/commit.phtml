@@ -1,15 +1,16 @@
 <h1>Commit details for <?php echo $this->hash; ?></h1>
 
 <?php
-	$parentUrl = $this->getUrl(array(
-		'hash' => $this->details['parent']
-	));
 	$repo = $this->repository;
+
+	if ($this->details['parent'] !== null) {
+		$hash = $this->details['parent'];
+		echo "<a href=\"/commit/repository/$repo/hash/$hash/\">Parent commit</a> -- ";
+	}
 
 	$treeUrl = "/tree/repository/$repo/hash/" . $this->details['tree'];
 ?>
 
-<a href="<?php echo $parentUrl; ?>">Parent commit</a> --
 <a href="<?php echo $treeUrl; ?>">Tree</a>
 
 <br /><br />
