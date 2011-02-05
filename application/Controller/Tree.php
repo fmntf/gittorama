@@ -25,6 +25,7 @@ class Controller_Tree extends Controller
 	public function run()
 	{
 		$this->view->hash = $this->getParam('hash');
+		$this->view->path = base64_decode($this->getParam('path', ''));
 		$this->view->repository = $this->getParam('repository');
 
 		$conf = $this->getUserConfiguration();

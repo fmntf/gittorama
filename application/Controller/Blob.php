@@ -25,7 +25,7 @@ class Controller_Blob extends Controller
 	public function run()
 	{
 		$hash = $this->getParam('hash');
-		$path = base64_decode($this->getParam('path'));
+		$this->view->path = base64_decode($this->getParam('path'));
 
 		$conf = $this->getUserConfiguration();
 		$path = Utils::getRepositoryPath($conf, $this->getParam('repository'));

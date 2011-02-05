@@ -2,9 +2,11 @@
 
 <?php
 
+	var_dump($this->path);
+
 	foreach ($this->files['trees'] as $tree) {
 		$hash = $tree['hash'];
-		$path = base64_encode($tree['name']);
+		$path = base64_encode($this->path . '/' . $tree['name']);
 		$treeUrl = "/tree/repository/{$this->repository}/hash/$hash/path/$path/";
 
 		echo "<a href=\"$treeUrl\">{$tree['name']}</a><br />";
@@ -12,7 +14,7 @@
 
 	foreach ($this->files['blobs'] as $blob) {
 		$hash = $blob['hash'];
-		$path = base64_encode($blob['name']);
+		$path = base64_encode($this->path . '/' . $blob['name']);
 		$blobUrl = "/blob/repository/{$this->repository}/hash/$hash/path/$path/";
 
 		echo "<a href=\"$blobUrl\">{$blob['name']}</a><br />";
