@@ -1,7 +1,7 @@
 <?php
 
 /**
- * gittorama - a websvn for git
+ * gittorama - a stupid web interface for a stupid content tracker
  * Copyright (C) 2010  Francesco Montefoschi <francesco.monte@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,20 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-class Controller_Tree extends Controller
+class Controller_Blob extends Controller
 {
 	public function run()
 	{
-		$this->view->hash = $this->getParam('hash');
-		$this->view->repository = $this->getParam('repository');
+		$hash = $this->getParam('hash');
+		$path = base64_decode($this->getParam('path'));
 
 		$conf = $this->getUserConfiguration();
-		$path = Utils::getRepositoryPath($conf, $this->view->repository);
-		$tree = new Model_Tree($path, $this->view->hash);
+		$path = Utils::getRepositoryPath($conf, $this->getParam('repository'));
+		
+		$blob = new Model_Blob($path, $hash);
 
-		$this->view->files = $tree->getBisectedFiles();
+		$this->view->content = $blob->getContent();
 
-		$this->render('tree');
+		$this->render('blob');
 	}
 }

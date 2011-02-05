@@ -1,5 +1,21 @@
 <h1>Tree for <?php echo $this->hash; ?></h1>
 
 <?php
-	var_dump($this->files);
+
+	foreach ($this->files['trees'] as $tree) {
+		$hash = $tree['hash'];
+		$path = base64_encode($tree['name']);
+		$treeUrl = "/tree/repository/{$this->repository}/hash/$hash/path/$path/";
+
+		echo "<a href=\"$treeUrl\">{$tree['name']}</a><br />";
+	}
+
+	foreach ($this->files['blobs'] as $blob) {
+		$hash = $blob['hash'];
+		$path = base64_encode($blob['name']);
+		$blobUrl = "/blob/repository/{$this->repository}/hash/$hash/path/$path/";
+
+		echo "<a href=\"$blobUrl\">{$blob['name']}</a><br />";
+	}
+	
 ?>
