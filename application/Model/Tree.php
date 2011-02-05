@@ -42,6 +42,26 @@ class Model_Tree
 		return $this->files;
 	}
 
+	public function getBisectedFiles()
+	{
+		$tree = $this->fetchFiles();
+
+		$predicate = function($item) {
+			return $item['type'] == 'tree';
+		};
+		$trees = array_values(array_filter($tree, $predicate));
+
+		$predicate = function($item) {
+			return $item['type'] == 'blob';
+		};
+		$blobs = array_values(array_filter($tree, $predicate));
+
+		return array(
+			'trees' => $trees,
+			'blobs' => $blobs
+		);
+	}
+
 	private function fetchFiles()
 	{
 		$command = "git --git-dir={$this->path} ls-tree {$this->hash}";

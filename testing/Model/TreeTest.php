@@ -55,4 +55,18 @@ class Model_TreeTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+	public function testListsRepositoryBisectingBlobsAndTrees()
+	{
+		$path = unpackRepository('pro');
+		$tree = new Model_Tree($path, 'HEAD');
+
+		$files = $tree->getBisectedFiles();
+
+		$this->assertArrayHasKey('blobs', $files);
+		$this->assertArrayHasKey('trees', $files);
+
+		$this->assertEquals('file.php', $files['blobs'][0]['name']);
+		$this->assertEquals('file.txt', $files['blobs'][1]['name']);
+		$this->assertEquals('dir', $files['trees'][0]['name']);
+	}
 }
