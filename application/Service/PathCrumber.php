@@ -20,21 +20,23 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-class Controller_Tree extends Controller
+class Service_PathCrumber
 {
-	public function run()
+	private $repositoryName;
+
+	public function __construct($repositoryName)
 	{
-		$this->view->hash = $this->getParam('hash');
-		$this->view->path = base64_decode($this->getParam('path', '/'));
-		$this->view->repository = $this->getParam('repository');
-		$this->view->crumber = new Service_PathCrumber($this->view->repository);
+		$this->repositoryName = $repositoryName;
+	}
 
-		$conf = $this->getUserConfiguration();
-		$path = Utils::getRepositoryPath($conf, $this->view->repository);
-		$tree = new Model_Tree($path, $this->view->hash);
+	public function render($path)
+	{
+		if ($path == '/') {
+			return array($this->repositoryName);
+		}
 
-		$this->view->files = $tree->getBisectedFiles();
-
-		$this->render('tree');
+		$parts = explode('/', $path);
+		$parts[0] = $this->repositoryName;
+		return $parts;
 	}
 }

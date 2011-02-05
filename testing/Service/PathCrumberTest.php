@@ -20,21 +20,28 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html  GNU AGPL 3.0
  */
 
-class Controller_Tree extends Controller
+class Service_PathCrumberTest extends PHPUnit_Framework_TestCase
 {
-	public function run()
+	public function setUp()
 	{
-		$this->view->hash = $this->getParam('hash');
-		$this->view->path = base64_decode($this->getParam('path', '/'));
-		$this->view->repository = $this->getParam('repository');
-		$this->view->crumber = new Service_PathCrumber($this->view->repository);
+		$this->crumber = new Service_PathCrumber('MyRepo');
+	}
 
-		$conf = $this->getUserConfiguration();
-		$path = Utils::getRepositoryPath($conf, $this->view->repository);
-		$tree = new Model_Tree($path, $this->view->hash);
+	public function testRendersRootNode()
+	{
+		$rendered = $this->crumber->render('/');
 
-		$this->view->files = $tree->getBisectedFiles();
+		$this->assertEquals(1, count($rendered));
+		$this->assertEquals('MyRepo', $rendered[0]);
+	}
+	
+	public function testRendersSubdirectories()
+	{
+		$rendered = $this->crumber->render('/my/Dir');
 
-		$this->render('tree');
+		$this->assertEquals(3, count($rendered));
+		$this->assertEquals('MyRepo', $rendered[0]);
+		$this->assertEquals('my', $rendered[1]);
+		$this->assertEquals('Dir', $rendered[2]);
 	}
 }
