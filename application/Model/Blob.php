@@ -38,4 +38,18 @@ class Model_Blob
 
 		return $result;
 	}
+
+	public function getLanguage($path)
+	{
+		$extension = pathinfo($this->path . $path, PATHINFO_EXTENSION);
+
+		switch ($extension) {
+			case 'php':
+			case 'js':
+			case 'xml':
+				return $extension;
+		}
+
+		return false;
+	}
 }

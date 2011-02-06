@@ -35,9 +35,17 @@ class Controller_Blob extends Controller
 		
 		$blob = new Model_Blob($path, $hash);
 
-		$this->view->content = $blob->getContent();
-		$this->view->tree = new Model_Tree($path, $from);
+		$language = $blob->getLanguage($this->view->path);
+		if ($language) {
+			$geshiPath = realpath(__DIR__ . '/../../library/Geshi') . '/';
+			require_once $geshiPath . 'geshi.php';
+			$geshi = new GeSHi($blob->getContent(), $language, $geshiPath);
+			$this->view->content = $geshi->parse_code();
+		} else {
+			$this->view->content = nl2br($blob->getContent());
+		}
 
+		$this->view->tree = new Model_Tree($path, $from);
 		$this->render('blob');
 	}
 }

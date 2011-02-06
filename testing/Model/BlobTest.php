@@ -33,4 +33,13 @@ class Model_BlobTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals("Hi, I'm allone..\n\n", $content);
 	}
+
+	public function testDetectsIfFilesAreFormattable()
+	{
+		$path = unpackRepository('simple');
+		$file = new Model_Blob($path, 'any');
+
+		$this->assertEquals('php', $file->getLanguage('/file.php'));
+		$this->assertFalse($file->getLanguage('/file.txt'));
+	}
 }
