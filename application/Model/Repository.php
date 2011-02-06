@@ -84,7 +84,7 @@ class Model_Repository
 
 		// @todo: move me
 		$default = "[\*]?";
-		$noun = "[a-zA-Z0-9_\-]+";
+		$noun = "[a-zA-Z0-9_\-\.]+";
 		$commit = "[a-z0-9]+";
 		$phrase = ".*";
 		$space = "\s*";
