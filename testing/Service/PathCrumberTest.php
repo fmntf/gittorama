@@ -24,24 +24,36 @@ class Service_PathCrumberTest extends PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
-		$this->crumber = new Service_PathCrumber('MyRepo');
+		$this->crumber = new Service_PathCrumber('MyRepo', 'sha1');
 	}
 
 	public function testRendersRootNode()
 	{
-		$rendered = $this->crumber->render('/');
+		$parts = $this->crumber->getParts('/');
 
-		$this->assertEquals(1, count($rendered));
-		$this->assertEquals('MyRepo', $rendered[0]);
+		$this->assertEquals(1, count($parts));
+		$this->assertEquals('MyRepo', $parts[0]);
 	}
 	
 	public function testRendersSubdirectories()
 	{
-		$rendered = $this->crumber->render('/my/Dir');
+		$parts = $this->crumber->getParts('/my/Dir');
 
-		$this->assertEquals(3, count($rendered));
-		$this->assertEquals('MyRepo', $rendered[0]);
-		$this->assertEquals('my', $rendered[1]);
-		$this->assertEquals('Dir', $rendered[2]);
+		$this->assertEquals(3, count($parts));
+		$this->assertEquals('MyRepo', $parts[0]);
+		$this->assertEquals('my', $parts[1]);
+		$this->assertEquals('Dir', $parts[2]);
+	}
+
+	public function testRendersPathToHtml()
+	{
+		$html = $this->crumber->getHtml('/my/file.txt');
+
+		$url = '/tree/repository/MyRepo/hash/sha1/';
+		$my = $url . 'path/' . base64_encode('/my') . '/';
+
+		$expected = "<ul><li><a href=\"$url\">MyRepo</a></li>" .
+					"<li><a href=\"$my\">my</a></li><li>file.txt</li></ul>";
+		$this->assertEquals($expected, $html);
 	}
 }

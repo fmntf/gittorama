@@ -27,7 +27,7 @@ class Controller_Tree extends Controller
 		$this->view->hash = $this->getParam('hash');
 		$this->view->path = base64_decode($this->getParam('path', '/'));
 		$this->view->repository = $this->getParam('repository');
-		$this->view->crumber = new Service_PathCrumber($this->view->repository);
+		$this->view->crumber = new Service_PathCrumber($this->view->repository, $this->view->hash);
 
 		$conf = $this->getUserConfiguration();
 		$path = Utils::getRepositoryPath($conf, $this->view->repository);

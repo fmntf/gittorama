@@ -23,13 +23,15 @@
 class Service_PathCrumber
 {
 	private $repositoryName;
+	private $baseHash;
 
-	public function __construct($repositoryName)
+	public function __construct($repositoryName, $baseHash)
 	{
 		$this->repositoryName = $repositoryName;
+		$this->baseHash = $baseHash;
 	}
 
-	public function render($path)
+	public function getParts($path)
 	{
 		if ($path == '/') {
 			return array($this->repositoryName);
@@ -38,5 +40,30 @@ class Service_PathCrumber
 		$parts = explode('/', $path);
 		$parts[0] = $this->repositoryName;
 		return $parts;
+	}
+
+	public function getHtml($path)
+	{
+		$printables = $this->getParts($path);
+		$paths = explode('/', $path);
+		$path = '';
+
+		$last = array_pop($printables);
+		$html = array('<ul>');
+		foreach ($printables as $i=>$printable) {
+			if ($i == 0) {
+				$pathUrl = '';
+			} else {
+				$path .= '/' . $paths[$i];
+				$pathUrl = 'path/' . base64_encode($path) . '/';
+			}
+			$url = "/tree/repository/{$this->repositoryName}/hash/{$this->baseHash}/$pathUrl";
+			$html[] = "<li><a href=\"$url\">$printable</a></li>";
+		}
+
+		$html[] = "<li>$last</li>";
+		$html[] = '</ul>';
+
+		return implode('', $html);
 	}
 }

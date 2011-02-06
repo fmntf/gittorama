@@ -27,7 +27,7 @@ class Controller_Blob extends Controller
 		$hash = $this->getParam('hash');
 		$this->view->path = base64_decode($this->getParam('path'));
 		$repository = $this->getParam('repository');
-		$this->view->crumber = new Service_PathCrumber($repository);
+		$this->view->crumber = new Service_PathCrumber($repository, $hash);
 
 		$conf = $this->getUserConfiguration();
 		$path = Utils::getRepositoryPath($conf, $repository);
