@@ -71,7 +71,7 @@ class Model_Tree
 		$space = "\s+";
 		$type = "\w+";
 		$hash = "[a-z0-9]+";
-		$noun = "[\w\w\.]+";
+		$noun = "[\w\w\.\-]+";
 
 		$pattern  = "/($mode)$space($type)$space($hash)$space($noun)/";
 
@@ -103,6 +103,7 @@ class Model_Tree
 				return $item['name'] == $directory;
 			};
 			$dir = array_values(array_filter($tree, $predicate));
+
 			$hash = $dir[0]['hash'];
 		}
 

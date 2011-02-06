@@ -33,8 +33,9 @@ class Controller_Tree extends Controller
 		$conf = $this->getUserConfiguration();
 		$path = Utils::getRepositoryPath($conf, $this->view->repository);
 
-		$this->view->tree = new Model_Tree($path, $this->view->hash);
-		$this->view->files = $this->view->tree->getBisectedFiles();
+		$this->view->tree = new Model_Tree($path, $this->view->from);
+		$tree = new Model_Tree($path, $this->view->hash);
+		$this->view->files = $tree->getBisectedFiles();
 
 		$this->render('tree');
 	}
