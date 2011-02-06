@@ -60,32 +60,39 @@ class Model_Log
 		$pattern  = "/($hash)$return";
 		$pattern .= "tree ". "($hash)$return";
 		$pattern .= "(parent ". "($hash)$return)?";
+		$pattern .= "(parent ". "($hash)$return)?";
 		$pattern .= "author " . "($phrase)$space($contact)$space($time)$return";
 		$pattern .= "committer " . "($phrase)$space($contact)$space($time)$return";
 		$pattern .= "($multiLinePharse)/";
 
 		preg_match($pattern, $result, $matches);
 
-		$parent = ($matches[4] == '') ? null : $matches[4];
-
-		return array(
+		$info = array(
 			'hash' => $matches[1],
 			'tree' => $matches[2],
-			'parent' => $parent,
 			'author' => array(
-				'name' => $matches[5],
-				'email' => $matches[7],
-				'timestamp' => $matches[9],
-				'offset' => $matches[10]
+				'name' => $matches[7],
+				'email' => $matches[9],
+				'timestamp' => $matches[11],
+				'offset' => $matches[12]
 			),
 			'committer' => array(
-				'name' => $matches[11],
-				'email' => $matches[13],
-				'timestamp' => $matches[15],
-				'offset' => $matches[16]
+				'name' => $matches[13],
+				'email' => $matches[15],
+				'timestamp' => $matches[17],
+				'offset' => $matches[18]
 			),
-			'message' => trim($matches[17])
+			'message' => trim($matches[19])
 		);
+		
+		$parent = ($matches[4] == '') ? null : $matches[4];
+		if ($matches[6] == '') {
+			$info['parent'] = $parent;
+		} else {
+			$info['parents'] = array($parent, $matches[6]);
+		}
+
+		return $info;
 	}
 
 }

@@ -22,8 +22,7 @@
 
 class Model_LogTest extends PHPUnit_Framework_TestCase
 {
-
-	public function testCanGetLogInfo()
+	public function testGetsLogInfo()
 	{
 		$path = unpackRepository('simple');
 		$log = new Model_Log($path, 'db57541ba4f7686c2063d7d1290eba612b30bf59');
@@ -39,4 +38,13 @@ class Model_LogTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($info['author'], $info['committer']);
 	}
 
+	public function testGetsLogInfoAboutBranchMerging()
+	{
+		$path = unpackRepository('branched');
+		$log = new Model_Log($path, 'be4f8799aff570a165b9287c78640fd2f608bea6');
+
+		$info = $log->getInfo();
+		$this->assertEquals('9704a093a3e651de1e92dcbf5327d368b732dbc5', $info['parents'][0]);
+		$this->assertEquals('0492a819d025190e845bd4385782f49394384807', $info['parents'][1]);
+	}
 }
