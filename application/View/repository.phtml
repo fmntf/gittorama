@@ -10,7 +10,7 @@
 
 <p><?php echo $description; ?></p>
 
-<h3>Logs</h3>
+<h3>Last 50 commits</h3>
 <?php
 	foreach ($this->logs as $entry) {
 		$info = $entry->getInfo();
@@ -29,7 +29,7 @@
 	foreach ($this->branches as $branch) {
 		$url = '/repository' . $this->getUrl(array('branch' => $branch['name']));
 		$detail = '<em>' . $branch['message'] . '</em> -- on ' . $branch['hash'];
-		echo "<a href='$url'>{$branch['name']}</a> - $detail";
+		echo "<a href='$url'>{$branch['name']}</a> - $detail<br />";
 	}
 ?>
 

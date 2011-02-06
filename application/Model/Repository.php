@@ -133,7 +133,7 @@ class Model_Repository
 		$logs = array();
 		$hash = $this->getBranchHash($branchName);
 
-		$command = "git --git-dir={$this->path} rev-list $branchName";
+		$command = "git --git-dir={$this->path} rev-list $branchName --max-count 50";
 		$result = shell_exec($command);
 
 		foreach (explode("\n", trim($result)) as $hash) {
