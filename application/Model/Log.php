@@ -54,7 +54,7 @@ class Model_Log
 		$space = "\s+";
 		$phrase = ".*";
 		$multiLinePharse = "[\w\W\s]*";
-		$contact = "<($noun@$noun\.$noun)>";
+		$contact = "<($noun@.*)>";
 		$time = "(\d+) \+(\d+)";
 
 		$pattern  = "/($hash)$return";
