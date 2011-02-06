@@ -62,10 +62,15 @@ class Model_Log
 		$pattern .= "(parent ". "($hash)$return)?";
 		$pattern .= "(parent ". "($hash)$return)?";
 		$pattern .= "author " . "($phrase)$space($contact)$space($time)$return";
-		$pattern .= "committer " . "($phrase)$space($contact)$space($time)$return";
-		$pattern .= "($multiLinePharse)/";
+		$pattern .= "committer " . "($phrase)$space($contact)$space($time)$return?";
+		$pattern .= "($multiLinePharse)?/";
 
 		preg_match($pattern, $result, $matches);
+
+		$message = trim($matches[19]);
+		if ($message == '') {
+			$message = '<em>This commit has no message</em>.';
+		}
 
 		$info = array(
 			'hash' => $matches[1],
@@ -82,7 +87,7 @@ class Model_Log
 				'timestamp' => $matches[17],
 				'offset' => $matches[18]
 			),
-			'message' => trim($matches[19])
+			'message' => $message
 		);
 		
 		$parent = ($matches[4] == '') ? null : $matches[4];
