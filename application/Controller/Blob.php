@@ -24,10 +24,11 @@ class Controller_Blob extends Controller
 {
 	public function run()
 	{
+		$from = $this->getParam('from');
 		$hash = $this->getParam('hash');
 		$this->view->path = base64_decode($this->getParam('path'));
 		$repository = $this->getParam('repository');
-		$this->view->crumber = new Service_PathCrumber($repository, $hash);
+		$this->view->crumber = new Service_PathCrumber($repository, $from);
 
 		$conf = $this->getUserConfiguration();
 		$path = Utils::getRepositoryPath($conf, $repository);
@@ -35,6 +36,7 @@ class Controller_Blob extends Controller
 		$blob = new Model_Blob($path, $hash);
 
 		$this->view->content = $blob->getContent();
+		$this->view->tree = new Model_Tree($path, $from);
 
 		$this->render('blob');
 	}

@@ -42,7 +42,7 @@ class Service_PathCrumber
 		return $parts;
 	}
 
-	public function getHtml($path)
+	public function getHtml(Model_Tree $tree, $path)
 	{
 		$printables = $this->getParts($path);
 		$paths = explode('/', $path);
@@ -55,9 +55,10 @@ class Service_PathCrumber
 				$pathUrl = '';
 			} else {
 				$path .= '/' . $paths[$i];
-				$pathUrl = 'path/' . base64_encode($path) . '/';
+				$hash = $tree->getHash($path);
+				$pathUrl = "hash/$hash/path/" . base64_encode($path) . '/';
 			}
-			$url = "/tree/repository/{$this->repositoryName}/hash/{$this->baseHash}/$pathUrl";
+			$url = "/tree/repository/{$this->repositoryName}/from/{$this->baseHash}/$pathUrl";
 			$html[] = "<li><a href=\"$url\">$printable</a></li>";
 		}
 

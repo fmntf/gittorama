@@ -47,13 +47,16 @@ class Service_PathCrumberTest extends PHPUnit_Framework_TestCase
 
 	public function testRendersPathToHtml()
 	{
-		$html = $this->crumber->getHtml('/my/file.txt');
+		$path = unpackRepository('pro');
+		$tree = new Model_Tree($path, 'HEAD');
 
-		$url = '/tree/repository/MyRepo/hash/sha1/';
-		$my = $url . 'path/' . base64_encode('/my') . '/';
+		$html = $this->crumber->getHtml($tree, '/dir/nowwithsomecontent');
+
+		$url = '/tree/repository/MyRepo/from/sha1/';
+		$my = $url . 'hash/2524b7c38eaf0f31706ceb6e7f892f96c1c49701/path/' . base64_encode('/dir') . '/';
 
 		$expected = "<ul><li><a href=\"$url\">MyRepo</a></li>" .
-					"<li><a href=\"$my\">my</a></li><li>file.txt</li></ul>";
+					"<li><a href=\"$my\">dir</a></li><li>nowwithsomecontent</li></ul>";
 		$this->assertEquals($expected, $html);
 	}
 }

@@ -24,16 +24,17 @@ class Controller_Tree extends Controller
 {
 	public function run()
 	{
-		$this->view->hash = $this->getParam('hash');
+		$this->view->from = $this->getParam('from');
+		$this->view->hash = $this->getParam('hash', $this->view->from);
 		$this->view->path = base64_decode($this->getParam('path', '/'));
 		$this->view->repository = $this->getParam('repository');
-		$this->view->crumber = new Service_PathCrumber($this->view->repository, $this->view->hash);
+		$this->view->crumber = new Service_PathCrumber($this->view->repository, $this->view->from);
 
 		$conf = $this->getUserConfiguration();
 		$path = Utils::getRepositoryPath($conf, $this->view->repository);
-		$tree = new Model_Tree($path, $this->view->hash);
 
-		$this->view->files = $tree->getBisectedFiles();
+		$this->view->tree = new Model_Tree($path, $this->view->hash);
+		$this->view->files = $this->view->tree->getBisectedFiles();
 
 		$this->render('tree');
 	}

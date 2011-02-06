@@ -8,7 +8,7 @@
 		echo "<a href=\"/commit/repository/$repo/hash/$hash/\">Parent commit</a> -- ";
 	}
 
-	$treeUrl = "/tree/repository/$repo/hash/" . $this->details['tree'];
+	$treeUrl = "/tree/repository/$repo/from/" . $this->details['tree'];
 ?>
 
 <a href="<?php echo $treeUrl; ?>">Tree</a>

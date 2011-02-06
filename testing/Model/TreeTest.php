@@ -69,4 +69,13 @@ class Model_TreeTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('file.txt', $files['blobs'][1]['name']);
 		$this->assertEquals('dir', $files['trees'][0]['name']);
 	}
+
+	public function testDetectsHashFromPath()
+	{
+		$path = unpackRepository('pro');
+		$tree = new Model_Tree($path, 'HEAD');
+
+		$hash = $tree->getHash('/dir');
+		$this->assertEquals($hash, '2524b7c38eaf0f31706ceb6e7f892f96c1c49701');
+	}
 }

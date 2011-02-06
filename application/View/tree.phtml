@@ -1,13 +1,13 @@
-<h1>Tree for <?php echo $this->hash; ?></h1>
+<h1>Tree for <?php echo $this->from; ?></h1>
 
 <?php
 
-	echo $this->crumber->getHtml($this->path);
+	echo $this->crumber->getHtml($this->tree, $this->path);
 
 	foreach ($this->files['trees'] as $tree) {
 		$hash = $tree['hash'];
 		$path = base64_encode($this->path . '/' . $tree['name']);
-		$treeUrl = "/tree/repository/{$this->repository}/hash/$hash/path/$path/";
+		$treeUrl = "/tree/repository/{$this->repository}/from/{$this->from}/hash/$hash/path/$path/";
 
 		echo "<a href=\"$treeUrl\">{$tree['name']}</a><br />";
 	}
@@ -15,7 +15,7 @@
 	foreach ($this->files['blobs'] as $blob) {
 		$hash = $blob['hash'];
 		$path = base64_encode($this->path . '/' . $blob['name']);
-		$blobUrl = "/blob/repository/{$this->repository}/hash/$hash/path/$path/";
+		$blobUrl = "/blob/repository/{$this->repository}/from/{$this->from}/hash/$hash/path/$path/";
 
 		echo "<a href=\"$blobUrl\">{$blob['name']}</a><br />";
 	}

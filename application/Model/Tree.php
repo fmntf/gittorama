@@ -36,7 +36,7 @@ class Model_Tree
 	public function getFiles()
 	{
 		if ($this->files === null) {
-			$this->files = $this->fetchFiles();
+			$this->files = $this->fetchFiles($this->hash);
 		}
 
 		return $this->files;
@@ -44,7 +44,7 @@ class Model_Tree
 
 	public function getBisectedFiles()
 	{
-		$tree = $this->fetchFiles();
+		$tree = $this->fetchFiles($this->hash);
 
 		$predicate = function($item) {
 			return $item['type'] == 'tree';
@@ -62,9 +62,9 @@ class Model_Tree
 		);
 	}
 
-	private function fetchFiles()
+	private function fetchFiles($hash)
 	{
-		$command = "git --git-dir={$this->path} ls-tree {$this->hash}";
+		$command = "git --git-dir={$this->path} ls-tree $hash";
 		$result = trim(shell_exec($command));
 
 		$mode = "\d+";
@@ -91,4 +91,21 @@ class Model_Tree
 		return $files;
 	}
 
+	public function getHash($path)
+	{
+		$parts = explode('/', $path);
+		unset($parts[0]);
+
+		$hash = $this->hash;
+		foreach ($parts as $directory) {
+			$tree = $this->fetchFiles($hash);
+			$predicate = function($item) use ($directory) {
+				return $item['name'] == $directory;
+			};
+			$dir = array_values(array_filter($tree, $predicate));
+			$hash = $dir[0]['hash'];
+		}
+
+		return $hash;
+	}
 }
