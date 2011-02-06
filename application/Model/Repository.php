@@ -121,14 +121,17 @@ class Model_Repository
 		return $found;
 	}
 
+	private function getBranchHash($branchName)
+	{
+		foreach ($this->getBranches() as $branch) {
+			if ($branch['name'] == $branchName) return $branch['hash'];
+		}
+	}
 
 	public function getLogs($branchName)
 	{
-		foreach ($this->getBranches() as $branch) {
-			if ($branch['name'] == $branchName) $hash = $branch['hash'];
-		}
-
 		$logs = array();
+		$hash = $this->getBranchHash($branchName);
 
 		$command = "git --git-dir={$this->path} rev-list $branchName";
 		$result = shell_exec($command);
