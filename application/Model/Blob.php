@@ -45,9 +45,10 @@ class Model_Blob
 
 		switch ($extension) {
 			case 'php':
-			case 'js':
 			case 'xml':
 				return $extension;
+			case 'js':
+				return 'javascript';
 		}
 
 		return false;
