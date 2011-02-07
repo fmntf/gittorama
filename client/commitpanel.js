@@ -17,6 +17,22 @@ Gittorama.CommitPanel = Ext.extend(Ext.Panel, {
 		Ext.apply(this, Ext.apply(this.initialConfig, config));
 
 		Gittorama.CommitPanel.superclass.initComponent.apply(this, arguments);
+		
+		this.menuContext = new Ext.menu.Menu({
+			items: [{
+				id: 'opentree',
+				text: 'Open tree'
+			}],
+			listeners: {
+				itemclick: {
+					fn: function()
+					{
+						this.fireEvent('opentree', this.lastClickedHash);
+					},
+					scope: this
+				}
+			}
+		});
 	},
 
 	showCommit: function(commitRecord)
@@ -38,6 +54,23 @@ Gittorama.CommitPanel = Ext.extend(Ext.Panel, {
 
 		var html = String.format('<table width="100%"><tr><td width="50%">{0}</td><td>{1}</td></tr></table>', l, r);
 		this.update(html);
+		
+		this.enableHashes();
+	},
+	
+	enableHashes: function()
+	{
+		Ext.each(this.el.query('code'), function(hash){
+			var el = Ext.fly(hash);
+			el.on('contextmenu', this.onContextMenu, this);
+		}, this);
+	},
+	
+	onContextMenu: function(event, dom)
+	{
+		event.stopEvent();
+		this.lastClickedHash = dom.innerHTML;
+		this.menuContext.showAt(event.xy);
 	},
 
 	label: function(label)
