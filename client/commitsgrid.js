@@ -26,7 +26,13 @@ Gittorama.CommitsGrid = Ext.extend(Ext.grid.GridPanel, {
 				root: 'commits',
 				idProperty: 'hash',
 				fields: [
-					{name:'hash', type: 'string'}
+					{name:'hash', type: 'string'},
+					{name:'tree', type: 'string'},
+					{name:'parent', type: 'string'},
+					{name:'message', type: 'string'},
+					{name:'parents', type: 'array'},
+					{name:'author', type: 'object'},
+					{name:'committer', type: 'object'},
 				]
 			})
 		};
@@ -40,7 +46,9 @@ Gittorama.CommitsGrid = Ext.extend(Ext.grid.GridPanel, {
 
 	onRowClick: function(grid, row, event)
 	{
-		console.log(grid.getStore().getAt(row));
+		var record = grid.getStore().getAt(row);
+
+		this.fireEvent('commitselect', record);
 	}
 
 });

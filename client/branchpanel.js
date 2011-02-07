@@ -21,31 +21,20 @@ Gittorama.BranchPanel = Ext.extend(Ext.TabPanel, {
 						split: true,
 						animFloat: false,
 						autoHide: false,
-						useSplitTips: true
+						useSplitTips: true,
+						repositoryName: this.repositoryName
 					},
 					items: [
 						{
 							ref: '../commitContent',
-							title: 'Commit content',
-							region: 'south',
-							height: 150,
-							minSize: 75,
-							maxSize: 250,
-							cmargins: '5 0 0 0',
-							bodyStyle: 'padding:15px'
+							xtype: 'commitpatch'
 						},{
 							ref: '../lastCommits',
 							region:'west',
-							xtype: 'commitsgrid',
-							repositoryName: this.repositoryName
+							xtype: 'commitsgrid'
 						},{
 							ref: '../commitDetails',
-							title: 'Commit details',
-							collapsible: false,
-							region: 'center',
-							margins: '5 0 0 0',
-							html: 'author...',
-							bodyStyle: 'padding:15px'
+							xtype: 'commitpanel'
 						}
 					]
 				},
@@ -59,6 +48,8 @@ Gittorama.BranchPanel = Ext.extend(Ext.TabPanel, {
 		Ext.apply(this, Ext.apply(this.initialConfig, config));
 
 		Gittorama.BranchPanel.superclass.initComponent.apply(this, arguments);
+
+		this.mon(this.lastCommits, 'commitselect', this.onCommitSelect, this);
 	},
 
 	selectBranch: function(branchName)
@@ -70,6 +61,12 @@ Gittorama.BranchPanel = Ext.extend(Ext.TabPanel, {
 				branch: branchName
 			}
 		});
+	},
+
+	onCommitSelect: function(commitRecord)
+	{
+		this.commitDetails.showCommit(commitRecord);
+		this.commitContent.loadPatch(commitRecord.get('hash'));
 	}
 
 });
