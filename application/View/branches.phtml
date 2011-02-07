@@ -1,0 +1,12 @@
+<?php
+	$branches = array();
+	foreach ($this->branches as $branch) {
+		$detail = '<em>' . $branch['message'] . '</em> -- on ' . $branch['hash'];
+		$branches[] = array(
+			'leaf' => true,
+			'text' => $branch['name'],
+			'description' => $detail
+		);
+	}
+
+	echo json_encode($branches);
