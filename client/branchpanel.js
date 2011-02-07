@@ -39,8 +39,9 @@ Gittorama.BranchPanel = Ext.extend(Ext.TabPanel, {
 					]
 				},
 				{
-					ref: '../filesTree',
-					title: 'Tree'
+					ref: 'filesTree',
+					xtype: 'gitree',
+					repositoryName: this.repositoryName
 				}
 			]
 		};
@@ -52,7 +53,7 @@ Gittorama.BranchPanel = Ext.extend(Ext.TabPanel, {
 		this.mon(this.lastCommits, 'commitselect', this.onCommitSelect, this);
 	},
 
-	selectBranch: function(branchName)
+	selectBranch: function(branchName, hash)
 	{
 		this.commitContent.update('');
 		this.commitDetails.update('');
@@ -61,6 +62,7 @@ Gittorama.BranchPanel = Ext.extend(Ext.TabPanel, {
 				branch: branchName
 			}
 		});
+		this.filesTree.selectBranch(hash);
 	},
 
 	onCommitSelect: function(commitRecord)

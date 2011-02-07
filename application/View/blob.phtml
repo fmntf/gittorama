@@ -1,4 +1,7 @@
 <?php
-echo $this->crumber->getHtml($this->tree, $this->path);
-echo $this->content;
-?>
+if ($this->formatted) {
+	echo $this->content;
+} else {
+	echo '<div style="font-family:monospace;>' . nl2br($this->content) . '</div>';
+}
+

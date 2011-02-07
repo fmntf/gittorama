@@ -39,9 +39,9 @@ class Model_Blob
 		return $result;
 	}
 
-	public function getLanguage($path)
+	public function getLanguage($filename)
 	{
-		$extension = pathinfo($this->path . $path, PATHINFO_EXTENSION);
+		$extension = substr(strrchr($filename,'.'),1);
 
 		switch ($extension) {
 			case 'php':

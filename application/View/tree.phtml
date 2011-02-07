@@ -1,23 +1,22 @@
-<h1>Tree for <?php echo $this->from; ?></h1>
-
 <?php
 
-	echo $this->crumber->getHtml($this->tree, $this->path);
+$nodes = array();
 
 	foreach ($this->files['trees'] as $tree) {
-		$hash = $tree['hash'];
-		$path = base64_encode($this->path . '/' . $tree['name']);
-		$treeUrl = "/tree/repository/{$this->repository}/from/{$this->from}/hash/$hash/path/$path/";
-
-		echo "<a href=\"$treeUrl\">{$tree['name']}</a><br />";
+		$nodes[] = array(
+			'text' => $tree['name'],
+			'id' => $tree['hash'],
+			'cls' => 'folder',
+		);
 	}
 
 	foreach ($this->files['blobs'] as $blob) {
-		$hash = $blob['hash'];
-		$path = base64_encode($this->path . '/' . $blob['name']);
-		$blobUrl = "/blob/repository/{$this->repository}/from/{$this->from}/hash/$hash/path/$path/";
-
-		echo "<a href=\"$blobUrl\">{$blob['name']}</a><br />";
+		$nodes[] = array(
+			'text' => $blob['name'],
+			'id' => $blob['hash'],
+			'cls' => 'file',
+			'leaf' => true
+		);
 	}
 	
-?>
+echo json_encode($nodes);

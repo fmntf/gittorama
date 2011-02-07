@@ -53,11 +53,11 @@ Gittorama.Viewport = Ext.extend(Ext.Viewport, {
 		this.mon(this.branchList, 'branchselect', this.onBranchSelect, this);
 	},
 
-	onBranchSelect: function(newBranch, description)
+	onBranchSelect: function(newBranch, description, hash)
 	{
 		this.repositoryDetails.setDescription(this.repositoryDescription, newBranch, description);
 
-		this.branchPanel.selectBranch(newBranch);
+		this.branchPanel.selectBranch(newBranch, hash);
 	}
 
 });

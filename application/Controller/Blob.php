@@ -24,28 +24,27 @@ class Controller_Blob extends Controller
 {
 	public function run()
 	{
-		$from = $this->getParam('from');
-		$hash = $this->getParam('hash');
-		$this->view->path = base64_decode($this->getParam('path'));
-		$repository = $this->getParam('repository');
-		$this->view->crumber = new Service_PathCrumber($repository, $from);
+		$hash = $_POST['hash'];
+		$repository = $_POST['repository'];
+		$name = $_POST['name'];
 
 		$conf = $this->getUserConfiguration();
 		$path = Utils::getRepositoryPath($conf, $repository);
 		
 		$blob = new Model_Blob($path, $hash);
 
-		$language = $blob->getLanguage($this->view->path);
+		$language = $blob->getLanguage($name);
 		if ($language) {
 			$geshiPath = realpath(__DIR__ . '/../../library/Geshi') . '/';
 			require_once $geshiPath . 'geshi.php';
 			$geshi = new GeSHi($blob->getContent(), $language, $geshiPath);
 			$this->view->content = $geshi->parse_code();
+			$this->view->formatted = true;
 		} else {
-			$this->view->content = nl2br($blob->getContent());
+			$this->view->formatted = false;
+			$this->view->content = $blob->getContent();
 		}
 
-		$this->view->tree = new Model_Tree($path, $from);
 		$this->render('blob');
 	}
 }

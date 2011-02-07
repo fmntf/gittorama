@@ -36,7 +36,7 @@ Gittorama.BranchList = Ext.extend(Ext.tree.TreePanel, {
 
 	onBranchSelect: function(node)
 	{
-		this.fireEvent('branchselect', node.text, node.attributes.description);
+		this.fireEvent('branchselect', node.text, node.attributes.description, node.attributes.hash);
 	}
 
 });

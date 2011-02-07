@@ -39,7 +39,7 @@ class Model_BlobTest extends PHPUnit_Framework_TestCase
 		$path = unpackRepository('simple');
 		$file = new Model_Blob($path, 'any');
 
-		$this->assertEquals('php', $file->getLanguage('/file.php'));
-		$this->assertFalse($file->getLanguage('/file.txt'));
+		$this->assertEquals('php', $file->getLanguage('file.php'));
+		$this->assertFalse($file->getLanguage('file.txt'));
 	}
 }
