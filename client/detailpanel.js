@@ -7,7 +7,7 @@ Gittorama.DetailPanel = Ext.extend(Ext.Panel, {
 		var config = {
 			title: 'Repository Details',
 			region: 'center',
-			bodyStyle: 'padding-bottom:15px;background:#eee;',
+			bodyStyle: 'padding:10px;background:#eee;',
 			autoScroll: true
 		};
 

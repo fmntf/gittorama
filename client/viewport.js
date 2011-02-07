@@ -23,8 +23,6 @@ Gittorama.Viewport = Ext.extend(Ext.Viewport, {
 					split:true,
 					margins: '2 0 5 5',
 					width: 275,
-					minSize: 100,
-					maxSize: 500,
 					items: [
 						{
 							xtype: 'branchlist',
