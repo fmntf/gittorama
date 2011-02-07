@@ -21,8 +21,7 @@ Gittorama.BranchPanel = Ext.extend(Ext.TabPanel, {
 						split: true,
 						animFloat: false,
 						autoHide: false,
-						useSplitTips: true,
-						bodyStyle: 'padding:15px'
+						useSplitTips: true
 					},
 					items: [
 						{
@@ -32,37 +31,21 @@ Gittorama.BranchPanel = Ext.extend(Ext.TabPanel, {
 							height: 150,
 							minSize: 75,
 							maxSize: 250,
-							cmargins: '5 0 0 0'
+							cmargins: '5 0 0 0',
+							bodyStyle: 'padding:15px'
 						},{
 							ref: '../lastCommits',
-							title: 'Last commits',
 							region:'west',
-							floatable: false,
-							margins: '5 0 0 0',
-//							cmargins: '5 5 0 0',
-							width: 175,
-//							minSize: 100,
-//							maxSize: 250,
-							items: [
-								{
-									xtype: 'multiselect',
-									border: false,
-									plain: true,
-									store: {
-										url: '/commits/repository/' + this.repositoryName,
-										root: 'images',
-										idProperty: 'name',
-										fields: ['name', 'url', {name:'size', type: 'float'}, {name:'lastmod', type:'date'}]
-									}
-								}
-							]
+							xtype: 'commitsgrid',
+							repositoryName: this.repositoryName
 						},{
 							ref: '../commitDetails',
 							title: 'Commit details',
 							collapsible: false,
 							region: 'center',
 							margins: '5 0 0 0',
-							html: 'author...'
+							html: 'author...',
+							bodyStyle: 'padding:15px'
 						}
 					]
 				},
@@ -82,7 +65,11 @@ Gittorama.BranchPanel = Ext.extend(Ext.TabPanel, {
 	{
 		this.commitContent.update('');
 		this.commitDetails.update('');
-		this.lastCommits.items.items[0].store.load();
+		this.lastCommits.store.load({
+			params: {
+				branch: branchName
+			}
+		});
 	}
 
 });
