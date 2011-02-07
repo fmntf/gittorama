@@ -23,6 +23,21 @@ Gittorama.CommitPatch = Ext.extend(Ext.Panel, {
 
 	loadPatch: function(hash)
 	{
+		Ext.Ajax.request({
+			url: '/show',
+			success: function()
+			{
+
+			},
+			failure: function()
+			{
+
+			},
+			params: {
+				repository: this.repositoryName,
+				hash: hash
+			}
+		});
 	}
 
 });
