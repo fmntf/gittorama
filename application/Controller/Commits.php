@@ -26,13 +26,11 @@ class Controller_Commits extends Controller
 	{
 		$repoName = $this->getParam('repository');
 
-		var_dump($repoName);
-
 		$repoPath = Utils::getRepositoryPath($this->getUserConfiguration(), $repoName);
 		$repository = new Model_Repository($repoPath);
 
-		$branchName = $this->getParam('branch', 'master');
-		$this->view->logs = $repository->getLogs($activeBranch);
+		$branchName = $_POST['branch'];
+		$this->view->logs = $repository->getLogs($branchName);
 
 		$this->render('commits');
 	}

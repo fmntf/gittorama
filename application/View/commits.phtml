@@ -16,4 +16,7 @@ $logs = array();
 //		echo "Commit: $hash -- by $author on $date<br/>";
 	}
 
-echo json_encode($logs);
+echo json_encode(array(
+	'success' => true,
+	'commits' => $logs
+));
