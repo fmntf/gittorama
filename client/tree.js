@@ -7,11 +7,10 @@ Gittorama.Tree = Ext.extend(Ext.Panel, {
 	initComponent: function()
 	{
 		var config = {
-			title: 'Tree',
 			layout:'hbox',
 			layoutConfig: {
 				align : 'stretch',
-				pack  : 'start',
+				pack  : 'start'
 			},
 			items: [
 				{
