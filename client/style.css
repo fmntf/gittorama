@@ -1,0 +1,27 @@
+body {
+    font-family:'lucida grande',tahoma,arial,sans-serif;
+    font-size:11px;
+}
+a {
+    color:#15428B;
+}
+a:link, a:visited {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+#header {
+    background: #7F99BE url(layout-browser-hd-bg.gif) repeat-x center;
+}
+#header h1 {
+    font-size: 16px;
+    color: #fff;
+    font-weight: normal;
+    padding: 5px 10px;
+}
+
+
+.commitsgrid .x-grid3-row td {
+    font-family: monospace;
+}

@@ -8,16 +8,18 @@ Gittorama.CommitsGrid = Ext.extend(Ext.grid.GridPanel, {
 	{
 		var config = {
 			title: 'Last commits',
-			floatable: false,
 			margins: '5 0 0 0',
 			width: 250,
+			collapsible: false,
 			hideHeaders: true,
+			autoExpandColumn: 'shorthash',
+			cls: 'commitsgrid',
 			colModel: new Ext.grid.ColumnModel({
 				columns: [
 					{
-						id: 'hash',
-						header: 'hash',
-						dataIndex: 'hash'
+						id: 'shorthash',
+						header: 'shorthash',
+						dataIndex: 'shorthash'
 					}
 				]
 			}),
@@ -27,6 +29,7 @@ Gittorama.CommitsGrid = Ext.extend(Ext.grid.GridPanel, {
 				idProperty: 'hash',
 				fields: [
 					{name:'hash', type: 'string'},
+					{name:'shorthash', type: 'string'},
 					{name:'tree', type: 'string'},
 					{name:'parent', type: 'string'},
 					{name:'message', type: 'string'},

@@ -4,6 +4,7 @@ $logs = array();
 
 	foreach ($this->logs as $entry) {
 		$info = $entry->getInfo();
+		$info['shorthash'] = substr($info['hash'], 0, 30);
 
 		$logs[] = $info;
 
