@@ -50,8 +50,15 @@ Gittorama.Tree = Ext.extend(Ext.Panel, {
 
 	selectBranch: function(hash)
 	{
-		this.filesTree.getRootNode().id = hash;
-		// reload tree
+		var tree = this.filesTree;
+
+		tree.getRootNode().id = hash;
+        tree.getLoader().load(tree.root);
+
+		// remove code
+		if (this.filesTree.rendered) {
+			this.filesTree.update('');
+		}
 	},
 
 	onNodeClick: function(node)
