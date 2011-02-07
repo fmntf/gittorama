@@ -1,5 +1,3 @@
-<h1><?php echo $this->name; ?> - on branch <?php echo $this->branch; ?></h1>
-
 <?php
 	if ($this->hasDefaultDescription) {
 		$description = _('This repository has the default description. Set it in <code>.git/description</code> file.');
@@ -8,28 +6,34 @@
 	}
 ?>
 
-<p><?php echo $description; ?></p>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?php echo $this->name; ?></title>
 
-<h3>Last 50 commits</h3>
-<?php
-	foreach ($this->logs as $entry) {
-		$info = $entry->getInfo();
-		$url = "/commit/repository/{$this->name}/hash/{$info['hash']}";
-		$hash = "<a href='$url'>" . $info['hash'] . '</a>';
-		$author = $info['author']['name'];
-			//@todo: provide also email
-			//@todo: if committer is different, notice this
-		$date = date("d-m-y H:i", $info['author']['timestamp']);
-		echo "Commit: $hash -- by $author on $date<br/>";
-	}
-?>
+    <link rel="stylesheet" type="text/css" href="/client/resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="/client/style.css" />
+    <script type="text/javascript" src="/client/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="/client/ext-all-debug.js"></script>
+    <script type="text/javascript" src="/client/branchlist.js"></script>
+    <script type="text/javascript" src="/client/commitsgrid.js"></script>
+    <script type="text/javascript" src="/client/commitpanel.js"></script>
+    <script type="text/javascript" src="/client/commitpatch.js"></script>
+    <script type="text/javascript" src="/client/tree.js"></script>
+    <script type="text/javascript" src="/client/branchpanel.js"></script>
+    <script type="text/javascript" src="/client/detailpanel.js"></script>
+    <script type="text/javascript" src="/client/viewport.js"></script>
+</head>
+<body>
 
-<h3>Branches</h3>
-<?php
-	foreach ($this->branches as $branch) {
-		$url = '/repository' . $this->getUrl(array('branch' => $branch['name']));
-		$detail = '<em>' . $branch['message'] . '</em> -- on ' . $branch['hash'];
-		echo "<a href='$url'>{$branch['name']}</a> - $detail<br />";
-	}
-?>
-
+<script type="text/javascript">
+Ext.onReady(function(){
+    new Gittorama.Viewport({
+		repositoryName: '<?php echo $this->name; ?>',
+		repositoryDescription: <?php echo json_encode($description); ?>
+    });
+});
+</script>
+<div id="header"><h1><?php echo $this->name; ?></h1></div>
+</body>
+</html>
