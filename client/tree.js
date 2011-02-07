@@ -23,11 +23,11 @@ Gittorama.Tree = Ext.extend(Ext.Panel, {
 					animate: true,
 					containerScroll: true,
 					border: false,
+					disabled: true,
 					dataUrl: '/tree',
 					root: {
 						nodeType: 'async',
 						text: '/',
-						draggable: false,
 						id: 'HEAD'
 					}
 				},{
@@ -53,11 +53,12 @@ Gittorama.Tree = Ext.extend(Ext.Panel, {
 		var tree = this.filesTree;
 
 		tree.getRootNode().id = hash;
+		tree.enable();
         tree.getLoader().load(tree.root);
 
 		// remove code
-		if (this.filesTree.rendered) {
-			this.filesTree.update('');
+		if (this.fileContent.rendered) {
+			this.fileContent.update('');
 		}
 	},
 
