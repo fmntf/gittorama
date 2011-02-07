@@ -87,6 +87,13 @@ class Application
 		$parts = explode('/', $request);
 		unset($parts[0]);
 
+		if (strpos(end($parts), '?')) {
+			$qs = explode('?', end($parts));
+			$parts[count($parts)] = $qs[0];
+
+			//process $qs[1];
+		}
+
 		return $parts;
 	}
 
